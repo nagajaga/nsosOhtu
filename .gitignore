@@ -1,0 +1,8 @@
+# Gradle
+/*.tmp
+/build/
+/.gradle/
+/.nb-gradle/
+
+# Others
+.directory

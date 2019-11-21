@@ -1,3 +1,5 @@
+package main;
+
 import ohtu.Work;
 
 public class Main {

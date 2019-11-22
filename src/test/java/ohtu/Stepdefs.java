@@ -18,7 +18,7 @@ public class Stepdefs {
 
     @Given("bookmark of a book is initialized")
     public void bookmarkOfABookIsInitialized() throws Throwable {
-        work = new Work("a", "b");
+        work = new Work("", "");
     }
 
     @When("bookmark title is set to {string}")

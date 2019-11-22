@@ -8,6 +8,10 @@ apply plugin: "java"
 apply plugin: "application"
 apply plugin: "jacoco"
 
+project.ext {
+    cucumberVersion = '4.7.4'
+}
+
 jar {
     manifest {
         attributes 'Main-Class': 'main.Main'
@@ -21,7 +25,14 @@ repositories {
 }
 
 dependencies {
+    testCompile 'io.cucumber:cucumber-java:' + cucumberVersion
+    testCompile 'io.cucumber:cucumber-junit:' + cucumberVersion
     testCompile 'junit:junit:4.12'
+}
+
+test {
+    testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
 }
 
 jacocoTestReport {

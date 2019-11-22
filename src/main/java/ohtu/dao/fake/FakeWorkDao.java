@@ -36,11 +36,11 @@ public class FakeWorkDao implements Dao<Work, Integer> {
      */
     @Override
     public Work create(Work work) {
-        Work newWork = new Work(work.getAuthor(), work.getTitle());
+        Work stored = new Work(work.getAuthor(), work.getTitle());
         Integer id = works.size();
-        newWork.setId(id);
+        stored.setId(id);
         work.setId(id);
-        works.add(newWork);
+        works.add(stored);
         return work;
     }
 

@@ -3,7 +3,7 @@ package ohtu;
 public class Work {
     private String author;
     private String title;
-    
+
     public Work(String author, String title) {
         this.author = author;
         this.title = title;

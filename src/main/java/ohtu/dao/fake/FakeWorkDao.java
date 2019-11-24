@@ -16,7 +16,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
     private static FakeWorkDao INSTANCE;
     private ArrayList<Work> works;
 
-    private FakeWorkDao() {
+    public FakeWorkDao() {
         works = new ArrayList<>();
     }
 
@@ -71,6 +71,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
         for (Work stored : works) {
             Work copy = new Work(stored.getAuthor(), stored.getTitle());
             copy.setId(stored.getId());
+            ret.add(copy);
         }
         return ret;
     }

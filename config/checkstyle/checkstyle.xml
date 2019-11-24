@@ -29,7 +29,7 @@
 	<module name='Indentation' />
 
 	<module name="CyclomaticComplexity">
-   	  <property name="max" value="3"/>
+   	  <property name="max" value="5"/>
  	</module>
 
     </module>

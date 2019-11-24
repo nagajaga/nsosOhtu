@@ -1,5 +1,7 @@
 # nsosOhtu
 
+User Guide: https://github.com/nagajaga/nsosOhtu/blob/master/Documentation/UserGuide.md
+
 Backlogs and Burndown Chart: https://docs.google.com/spreadsheets/d/1FrQU8JOUGhSy5zoP6BnwiiKdM6Ti8YhWodvQC19ESg4/edit?usp=sharing
 
 Definition of Done: 

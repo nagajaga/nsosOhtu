@@ -1,8 +1,6 @@
 # nsosOhtu
 
-Project backlog:
-
-Sprint backlog: https://docs.google.com/document/d/1r96JTCrXCp1uHmXQEGvsUZTleMaUfDpQfdNMLWUj1TQ/edit?usp=sharing
+Backlogs and Burndown Chart: https://docs.google.com/spreadsheets/d/1FrQU8JOUGhSy5zoP6BnwiiKdM6Ti8YhWodvQC19ESg4/edit?usp=sharing
 
 Definition of Done: 
 A user story is fully implemented and all acceptance criteria are met. It is ready for customer.

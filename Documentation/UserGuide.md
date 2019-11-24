@@ -1,8 +1,8 @@
 ## User Guide
 
 # How to run the program
-* Navigate to the installation directory using terminal.
-* Enter the command `./gradlew run`.
+* Navigate to the installation directory using command line.
+* Enter the command `./gradlew run` (`gradlew.bat run` on Windows).
 
 # How to create a new bookmark
 * Type `A`and press Enter to begin adding a new bookmark.

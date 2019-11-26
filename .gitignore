@@ -6,3 +6,4 @@
 
 # Others
 .directory
+.syntastic*

@@ -19,14 +19,18 @@ public class App {
         System.out.println("Hello!");
 
         while (true) {
-            System.out.println("Add/List/Exit (A/L/E)");
+            System.out.println("Add/List/Edit/Delete/Quit (A/L/E/D/Q)");
             String input = io.nextLine();
-            if (input.equals("E")) {
+            if (input.equals("Q")) {
                 break;
             } else if (input.equals("A")) {
                 handleAdding();
             } else if (input.equals("L")) {
                 handleListing();
+            } else if (input.equals("E")) {
+                handleEditing();
+            } else if (input.equals("D")) {
+                handleDeleting();
             }
         }
         System.out.println("Goodbye!");
@@ -59,4 +63,13 @@ public class App {
             }
         }
     }
+    
+    private void handleEditing() {
+        //edit functionality here
+    }
+    
+    private void handleDeleting() {
+        //delete functionality here
+    }
+   
 }

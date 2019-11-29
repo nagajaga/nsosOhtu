@@ -5,11 +5,13 @@ public class Work {
     private String author;
     private String title;
     private String url;
+    private String tags;
     
-    public Work(String author, String title, String url) {
+    public Work(String author, String title, String url, String tags) {
         this.author = author;
         this.title = title;
         this.url = url;
+        this.tags = tags;
     }
 
     public Integer getId() {
@@ -23,6 +25,10 @@ public class Work {
 
     public String getAuthor(){
         return this.author;
+    }
+    
+    public String getTags(){
+        return this.tags;
     }
 
     public String getTitle(){
@@ -43,6 +49,10 @@ public class Work {
     
     public void setUrl(String url) {
         this.url = url;
+    }
+    
+    public void setTags(String tags) {
+        this.tags = tags;
     }
     
     @Override

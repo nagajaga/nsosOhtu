@@ -37,10 +37,12 @@ public class App {
         String author = io.nextLine();
         System.out.println("Title: ");
         String title = io.nextLine();
-        System.out.println("URL: (enter - if empty)");
+        System.out.println("URL: (enter \"-\" if empty)");
         String url = io.nextLine();
-        if (!author.isEmpty() && !title.isEmpty() && !url.isEmpty()) {
-            dao.create(new Work(author, title, url));
+        System.out.println("Tags: (separate by \",\" , enter \"-\" if empty)");
+        String tags = io.nextLine();
+        if (!author.isEmpty() && !title.isEmpty() && !url.isEmpty() && !tags.isEmpty()) {
+            dao.create(new Work(author, title, url, tags));
         } else {
             System.out.println("Title and author should not be empty");
         }

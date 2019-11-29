@@ -15,7 +15,7 @@ public interface Dao<T, K> {
 
     T update(T object);
 
-    void delete(K key);
+    boolean delete(K key);
 
     List<T> list();
 }

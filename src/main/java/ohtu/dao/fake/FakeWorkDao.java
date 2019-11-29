@@ -5,6 +5,7 @@ package ohtu.dao.fake;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import ohtu.Work;
 import ohtu.dao.Dao;
 
@@ -37,7 +38,10 @@ public class FakeWorkDao implements Dao<Work, Integer> {
     @Override
     public Work create(Work work) {
         Work stored = new Work(work.getAuthor(), work.getTitle(), work.getUrl(), work.getTags());
-        Integer id = works.size();
+        Integer id = 0;
+        if (!works.isEmpty()) {
+            id = works.get(works.size() - 1).getId() + 1;
+        }
         stored.setId(id);
         work.setId(id);
         works.add(stored);
@@ -46,13 +50,23 @@ public class FakeWorkDao implements Dao<Work, Integer> {
 
     @Override
     public Work read(Integer key) {
-        if (key < 0 || key > works.size()) {
+        if (key < 0 || key > works.get(works.size() - 1).getId()) {
             return null;
         }
-        Work stored = works.get(key);
-        Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags());
-        copy.setId(stored.getId());
-        return copy;
+        Work stored = null;
+        for (Work work : works) {
+            if (Objects.equals(work.getId(), key)) {
+                stored = work;
+                break;
+            }
+        }
+        if (stored != null) {
+            Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags());
+            copy.setId(stored.getId());
+            return copy;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -61,8 +75,22 @@ public class FakeWorkDao implements Dao<Work, Integer> {
     }
 
     @Override
-    public void delete(Integer key) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean delete(Integer key) {
+        if (key < 0 || key > works.get(works.size() - 1).getId()) {
+            return false;
+        }
+        Work toRemove = null;
+        for (Work work : works) {
+            if (Objects.equals(work.getId(), key)) {
+                toRemove = work;
+                break;
+            }
+        }
+        if (toRemove != null) {
+            works.remove(toRemove);
+            return true;
+        }
+        return false;
     }
 
     @Override

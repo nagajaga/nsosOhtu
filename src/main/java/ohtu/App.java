@@ -33,7 +33,7 @@ public class App {
                 handleDeleting();
             }
         }
-        System.out.println("Goodbye!");
+        System.out.println("\nGoodbye!");
     }
 
     private void handleAdding() {
@@ -70,9 +70,9 @@ public class App {
         if (list.isEmpty()) {
             System.out.println("No works yet\n");
         } else {
-            System.out.println("\nAll works:");
+            System.out.println("\nAll works:\n");
             for (Work work : list) {
-                System.out.println(work);
+                System.out.println(work + "\n");
             }
             System.out.println("");
         }
@@ -83,7 +83,33 @@ public class App {
     }
 
     private void handleDeleting() {
-        //delete functionality here
+        List<Work> list = dao.list();
+        if (list.isEmpty()) {
+            System.out.println("No works yet\n");
+        } else {
+            System.out.println("\nEnter the item you want to delete by id:\n");
+            for (Work work : list) {
+                System.out.println("id: " + work.getId() + "\n" + work + "\n");
+            }
+            System.out.print("id: ");
+            int id = -1;
+            try {
+                id = Integer.parseInt(io.nextLine());
+            } catch (Exception e) {
+                System.out.println("Incorrect input");
+            }
+            if (id >= 0 && dao.read(id) != null) {
+                if (dao.delete(id)) {
+                    System.out.println("Item removed succesfully");
+                } else {
+                    System.out.println("Unexpected error");
+                }
+            } else {
+                System.out.println("Item not found");
+            }
+
+            System.out.println("");
+        }
     }
 
 }

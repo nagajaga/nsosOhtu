@@ -16,10 +16,10 @@ public class App {
 
     public void run() {
 
-        System.out.println("Hello!");
+        io.println("Hello!");
 
         while (true) {
-            System.out.print("Add/List/Edit/Delete/Quit (A/L/E/D/Q): ");
+            io.print("Add/List/Edit/Delete/Quit (A/L/E/D/Q): ");
             String input = io.nextLine();
             if (input.equalsIgnoreCase("Q")) {
                 break;
@@ -33,27 +33,27 @@ public class App {
                 handleDeleting();
             }
         }
-        System.out.println("\nGoodbye!");
+        io.println("\nGoodbye!");
     }
 
     private void handleAdding(int id, boolean editing) {
         while (true) {
-            System.out.print("Author: ");
+            io.print("Author: ");
             String author = io.nextLine();
             if (author.isEmpty()) {
                 break;
             }
-            System.out.print("Title: ");
+            io.print("Title: ");
             String title = io.nextLine();
             if (title.isEmpty()) {
                 break;
             }
-            System.out.print("URL (enter \"-\" if empty): ");
+            io.print("URL (enter \"-\" if empty): ");
             String url = io.nextLine();
             if (url.isEmpty()) {
                 break;
             }
-            System.out.print("Tags (separate by \",\" , enter \"-\" if empty): ");
+            io.print("Tags (separate by \",\" , enter \"-\" if empty): ");
             String tags = io.nextLine();
             if (tags.isEmpty()) {
                 break;
@@ -61,25 +61,25 @@ public class App {
             if (editing) {
                 Work work = new Work(author, title, url, tags);
                 if (dao.update(work, id) == null) {
-                    System.out.println("Unexpected error\n");
+                    io.println("Unexpected error\n");
                 }
             } else {
                 dao.create(new Work(author, title, url, tags));
             }
-            System.out.println("Item saved succesfully\n");
+            io.println("Item saved succesfully\n");
             return;
         }
-        System.out.println("Field must not be blank\n");
+        io.println("Field must not be blank\n");
     }
 
     private void handleListing() {
         List<Work> list = dao.list();
         if (list.isEmpty()) {
-            System.out.println("No works yet\n");
+            io.println("No works yet\n");
         } else {
-            System.out.println("\nAll works:\n");
+            io.println("\nAll works:\n");
             for (Work work : list) {
-                System.out.println(work + "\n");
+                io.println(work + "\n");
             }
         }
     }
@@ -89,7 +89,7 @@ public class App {
         if (id >= 0 && dao.read(id) != null) {
             handleAdding(id, true);
         } else if (!dao.list().isEmpty()) {
-            System.out.println("Item not found\n");
+            io.println("Item not found\n");
         }
     }
 
@@ -97,30 +97,30 @@ public class App {
         int id = askId("delete");
         if (id >= 0 && dao.read(id) != null) {
             if (dao.delete(id)) {
-                System.out.println("Item removed succesfully\n");
+                io.println("Item removed succesfully\n");
             } else {
-                System.out.println("Unexpected error\n");
+                io.println("Unexpected error\n");
             }
         } else if (!dao.list().isEmpty()) {
-            System.out.println("Item not found\n");
+            io.println("Item not found\n");
         }
     }
 
     private int askId(String method) {
         List<Work> list = dao.list();
         if (list.isEmpty()) {
-            System.out.println("No works yet\n");
+            io.println("No works yet\n");
         } else {
-            System.out.println("\nEnter the item you want to " + method + " by id:\n");
+            io.println("\nEnter the id of the item you want to " + method + ":\n");
             for (Work work : list) {
-                System.out.println("id: " + work.getId() + "\n" + work + "\n");
+                io.println("id: " + work.getId() + "\n" + work + "\n");
             }
-            System.out.print("id: ");
+            io.print("id: ");
             int id = -1;
             try {
                 id = Integer.parseInt(io.nextLine());
             } catch (Exception e) {
-                System.out.println("Incorrect input\n");
+                io.println("Incorrect input\n");
             }
             return id;
         }

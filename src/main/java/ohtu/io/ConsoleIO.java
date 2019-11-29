@@ -14,4 +14,14 @@ public class ConsoleIO implements IO {
     public String nextLine() {
         return scanner.nextLine();
     }
+
+    @Override
+    public void print(String output) {
+        System.out.print(output);
+    }
+
+    @Override
+    public void println(String output) {
+        System.out.println(output);
+    }
 }

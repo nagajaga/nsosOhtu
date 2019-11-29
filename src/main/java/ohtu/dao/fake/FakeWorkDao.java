@@ -50,7 +50,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
 
     @Override
     public Work read(Integer key) {
-        if (key < 0 || key > works.get(works.size() - 1).getId()) {
+        if (key < 0 || works.isEmpty() || key > works.get(works.size() - 1).getId()) {
             return null;
         }
         Work stored = null;
@@ -78,7 +78,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
 
     @Override
     public boolean delete(Integer key) {
-        if (key < 0 || key > works.get(works.size() - 1).getId()) {
+        if (key < 0 || works.isEmpty() || key > works.get(works.size() - 1).getId()) {
             return false;
         }
         Work toRemove = null;

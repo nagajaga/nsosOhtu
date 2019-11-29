@@ -21,15 +21,15 @@ public class App {
         while (true) {
             System.out.println("Add/List/Edit/Delete/Quit (A/L/E/D/Q)");
             String input = io.nextLine();
-            if (input.equals("Q")) {
+            if (input.equalsIgnoreCase("Q")) {
                 break;
-            } else if (input.equals("A")) {
+            } else if (input.equalsIgnoreCase("A")) {
                 handleAdding();
-            } else if (input.equals("L")) {
+            } else if (input.equalsIgnoreCase("L")) {
                 handleListing();
-            } else if (input.equals("E")) {
+            } else if (input.equalsIgnoreCase("E")) {
                 handleEditing();
-            } else if (input.equals("D")) {
+            } else if (input.equalsIgnoreCase("D")) {
                 handleDeleting();
             }
         }

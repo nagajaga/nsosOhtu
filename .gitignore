@@ -7,3 +7,4 @@
 # Others
 .directory
 .syntastic*
+/bin/

@@ -24,7 +24,7 @@ public class App {
             if (input.equalsIgnoreCase("Q")) {
                 break;
             } else if (input.equalsIgnoreCase("A")) {
-                handleAdding();
+                handleAdding(-1, false);
             } else if (input.equalsIgnoreCase("L")) {
                 handleListing();
             } else if (input.equalsIgnoreCase("E")) {
@@ -36,7 +36,7 @@ public class App {
         System.out.println("\nGoodbye!");
     }
 
-    private void handleAdding() {
+    private void handleAdding(int id, boolean editing) {
         while (true) {
             System.out.print("Author: ");
             String author = io.nextLine();
@@ -58,7 +58,14 @@ public class App {
             if (tags.isEmpty()) {
                 break;
             }
-            dao.create(new Work(author, title, url, tags));
+            if (editing) {
+                Work work = new Work(author, title, url, tags);
+                if (dao.update(work, id) == null) {
+                    System.out.println("Unexpected error\n");
+                }
+            } else {
+                dao.create(new Work(author, title, url, tags));
+            }
             System.out.println("Item saved succesfully\n");
             return;
         }
@@ -74,20 +81,37 @@ public class App {
             for (Work work : list) {
                 System.out.println(work + "\n");
             }
-            System.out.println("");
         }
     }
 
     private void handleEditing() {
-        //edit functionality here
+        int id = askId("edit");
+        if (id >= 0 && dao.read(id) != null) {
+            handleAdding(id, true);
+        } else if (!dao.list().isEmpty()) {
+            System.out.println("Item not found\n");
+        }
     }
 
     private void handleDeleting() {
+        int id = askId("delete");
+        if (id >= 0 && dao.read(id) != null) {
+            if (dao.delete(id)) {
+                System.out.println("Item removed succesfully\n");
+            } else {
+                System.out.println("Unexpected error\n");
+            }
+        } else if (!dao.list().isEmpty()) {
+            System.out.println("Item not found\n");
+        }
+    }
+
+    private int askId(String method) {
         List<Work> list = dao.list();
         if (list.isEmpty()) {
             System.out.println("No works yet\n");
         } else {
-            System.out.println("\nEnter the item you want to delete by id:\n");
+            System.out.println("\nEnter the item you want to " + method + " by id:\n");
             for (Work work : list) {
                 System.out.println("id: " + work.getId() + "\n" + work + "\n");
             }
@@ -96,20 +120,10 @@ public class App {
             try {
                 id = Integer.parseInt(io.nextLine());
             } catch (Exception e) {
-                System.out.println("Incorrect input");
+                System.out.println("Incorrect input\n");
             }
-            if (id >= 0 && dao.read(id) != null) {
-                if (dao.delete(id)) {
-                    System.out.println("Item removed succesfully");
-                } else {
-                    System.out.println("Unexpected error");
-                }
-            } else {
-                System.out.println("Item not found");
-            }
-
-            System.out.println("");
+            return id;
         }
+        return -1;
     }
-
 }

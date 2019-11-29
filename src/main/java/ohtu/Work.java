@@ -57,6 +57,6 @@ public class Work {
     
     @Override
     public String toString() {
-        return author + ": " + title + "\nURL: " + url;
+        return author + ": " + title + "\nURL: " + url + "\nTags: " + tags;
     }
 }

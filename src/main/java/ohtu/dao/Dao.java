@@ -13,7 +13,7 @@ public interface Dao<T, K> {
 
     T read(K key);
 
-    T update(T object);
+    T update(T object, K key);
 
     boolean delete(K key);
 

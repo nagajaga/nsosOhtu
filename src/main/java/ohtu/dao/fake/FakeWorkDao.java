@@ -60,18 +60,20 @@ public class FakeWorkDao implements Dao<Work, Integer> {
                 break;
             }
         }
-        if (stored != null) {
-            Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags());
-            copy.setId(stored.getId());
-            return copy;
-        } else {
-            return null;
-        }
+        return stored;
     }
 
     @Override
-    public Work update(Work work) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Work update(Work work, Integer id) {
+        Work toUpdate = read(id);
+        if (toUpdate != null) {
+            toUpdate.setAuthor(work.getAuthor());
+            toUpdate.setTitle(work.getTitle());
+            toUpdate.setTags(work.getTags());
+            toUpdate.setUrl(work.getUrl());
+            return toUpdate;
+        }
+        return null;
     }
 
     @Override

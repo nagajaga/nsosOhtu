@@ -19,7 +19,7 @@ public class App {
         System.out.println("Hello!");
 
         while (true) {
-            System.out.println("Add/List/Edit/Delete/Quit (A/L/E/D/Q)");
+            System.out.print("Add/List/Edit/Delete/Quit (A/L/E/D/Q): ");
             String input = io.nextLine();
             if (input.equalsIgnoreCase("Q")) {
                 break;
@@ -37,39 +37,53 @@ public class App {
     }
 
     private void handleAdding() {
-        System.out.println("Author: ");
-        String author = io.nextLine();
-        System.out.println("Title: ");
-        String title = io.nextLine();
-        System.out.println("URL: (enter \"-\" if empty)");
-        String url = io.nextLine();
-        System.out.println("Tags: (separate by \",\" , enter \"-\" if empty)");
-        String tags = io.nextLine();
-        if (!author.isEmpty() && !title.isEmpty() && !url.isEmpty() && !tags.isEmpty()) {
+        while (true) {
+            System.out.print("Author: ");
+            String author = io.nextLine();
+            if (author.isEmpty()) {
+                break;
+            }
+            System.out.print("Title: ");
+            String title = io.nextLine();
+            if (title.isEmpty()) {
+                break;
+            }
+            System.out.print("URL (enter \"-\" if empty): ");
+            String url = io.nextLine();
+            if (url.isEmpty()) {
+                break;
+            }
+            System.out.print("Tags (separate by \",\" , enter \"-\" if empty): ");
+            String tags = io.nextLine();
+            if (tags.isEmpty()) {
+                break;
+            }
             dao.create(new Work(author, title, url, tags));
-        } else {
-            System.out.println("Title and author should not be empty");
+            System.out.println("Item saved succesfully\n");
+            return;
         }
+        System.out.println("Field must not be blank\n");
     }
 
     private void handleListing() {
         List<Work> list = dao.list();
         if (list.isEmpty()) {
-            System.out.println("No works yet");
+            System.out.println("No works yet\n");
         } else {
-            System.out.println("All works:\n");
+            System.out.println("\nAll works:");
             for (Work work : list) {
                 System.out.println(work);
             }
+            System.out.println("");
         }
     }
-    
+
     private void handleEditing() {
         //edit functionality here
     }
-    
+
     private void handleDeleting() {
         //delete functionality here
     }
-   
+
 }

@@ -37,8 +37,10 @@ public class App {
         String author = io.nextLine();
         System.out.println("Title: ");
         String title = io.nextLine();
-        if (!author.isEmpty() && !title.isEmpty()) {
-            dao.create(new Work(author, title));
+        System.out.println("URL: (enter - if empty)");
+        String url = io.nextLine();
+        if (!author.isEmpty() && !title.isEmpty() && !url.isEmpty()) {
+            dao.create(new Work(author, title, url));
         } else {
             System.out.println("Title and author should not be empty");
         }

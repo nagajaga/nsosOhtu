@@ -36,7 +36,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
      */
     @Override
     public Work create(Work work) {
-        Work stored = new Work(work.getAuthor(), work.getTitle());
+        Work stored = new Work(work.getAuthor(), work.getTitle(), work.getUrl());
         Integer id = works.size();
         stored.setId(id);
         work.setId(id);
@@ -50,7 +50,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
             return null;
         }
         Work stored = works.get(key);
-        Work copy = new Work(stored.getAuthor(), stored.getTitle());
+        Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl());
         copy.setId(stored.getId());
         return copy;
     }
@@ -69,7 +69,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
     public List<Work> list() {
         List<Work> ret = new ArrayList();
         for (Work stored : works) {
-            Work copy = new Work(stored.getAuthor(), stored.getTitle());
+            Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl());
             copy.setId(stored.getId());
             ret.add(copy);
         }

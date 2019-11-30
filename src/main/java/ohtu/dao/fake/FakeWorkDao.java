@@ -1,6 +1,3 @@
-/*
- * @author londes
- */
 package ohtu.dao.fake;
 
 import java.util.ArrayList;
@@ -50,7 +47,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
 
     @Override
     public Work read(Integer key) {
-        if (key < 0 || works.isEmpty() || key > works.get(works.size() - 1).getId()) {
+        if (key < 0 || works.isEmpty()) {
             return null;
         }
         Work stored = null;
@@ -78,7 +75,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
 
     @Override
     public boolean delete(Integer key) {
-        if (key < 0 || works.isEmpty() || key > works.get(works.size() - 1).getId()) {
+        if (key < 0 || works.isEmpty()) {
             return false;
         }
         Work toRemove = null;
@@ -97,7 +94,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
 
     @Override
     public List<Work> list() {
-        List<Work> ret = new ArrayList();
+        List<Work> ret = new ArrayList<>();
         for (Work stored : works) {
             Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags());
             copy.setId(stored.getId());
@@ -106,4 +103,36 @@ public class FakeWorkDao implements Dao<Work, Integer> {
         return ret;
     }
 
+    public List<Work> searchByTag(String tag) {
+        List<String> list = new ArrayList<String>();
+        list.add(tag);
+        List<Work> results = searchByTag(list);
+        return results;
+    }
+
+    public List<Work> searchByTag(List<String> tags) {
+        List<Work> results = new ArrayList<>();
+        for (Work stored : works) {
+            if (containsSubstrings(tags, stored.getTags())) {
+                Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags());
+                copy.setId(stored.getId());
+                results.add(copy);
+            }
+        }
+        return results;
+    }
+
+    /**
+     * A logical AND substring search
+     * @param needles the list of substrings to look for
+     * @param haystack the string to search
+     */
+    private boolean containsSubstrings(List<String> needles, String haystack) {
+        for (String needle : needles) {
+            if (!haystack.contains(needle)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

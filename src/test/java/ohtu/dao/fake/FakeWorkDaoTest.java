@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class FakeWorkDaoTest {
 
-    private Dao dao;
+    private Dao<Work, Integer> dao;
 
     @Before
     public void before() {
@@ -19,9 +19,9 @@ public class FakeWorkDaoTest {
     public void createAndRead() {
         create();
         assertTrue(dao.list().size() == 3);
-        Work work1 = (Work) dao.read(0);
-        Work work2 = (Work) dao.read(1);
-        Work work3 = (Work) dao.read(2);
+        Work work1 = dao.read(0);
+        Work work2 = dao.read(1);
+        Work work3 = dao.read(2);
         assertEquals(work1.getAuthor(), "a1");
         assertEquals(work1.getTitle(), "b1");
         assertEquals(work2.getAuthor(), "a2");
@@ -42,7 +42,7 @@ public class FakeWorkDaoTest {
         create();
         Work testWork = new Work("aa", "bb", "cc", "dd");
         dao.update(testWork, 1);
-        Work work = (Work) dao.read(1);
+        Work work = dao.read(1);
         assertTrue(work.getAuthor().equals("aa"));
     }
 

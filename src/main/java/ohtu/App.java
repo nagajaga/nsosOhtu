@@ -7,9 +7,9 @@ import ohtu.io.IO;
 public class App {
 
     private IO io;
-    private Dao dao;
+    private Dao<Work, Integer> dao;
 
-    public App(IO io, Dao dao) {
+    public App(IO io, Dao<Work, Integer> dao) {
         this.io = io;
         this.dao = dao;
     }

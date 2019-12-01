@@ -6,14 +6,20 @@ public class Work {
     private String title;
     private String url;
     private String tags;
+    private boolean read;
     
     public Work(String author, String title, String url, String tags) {
         this.author = author;
         this.title = title;
         this.url = url;
         this.tags = tags;
+        this.read = false;
     }
-
+    
+    public boolean getRead() {
+        return this.read;
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -53,6 +59,9 @@ public class Work {
     
     public void setTags(String tags) {
         this.tags = tags;
+    }
+    public void setRead(boolean read) {
+        this.read = read;
     }
     
     @Override

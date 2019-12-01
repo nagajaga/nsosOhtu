@@ -69,6 +69,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
             toUpdate.setTitle(work.getTitle());
             toUpdate.setTags(work.getTags());
             toUpdate.setUrl(work.getUrl());
+            toUpdate.setRead(work.getRead());
             Work copy = new Work(toUpdate.getAuthor(), toUpdate.getTitle(), toUpdate.getUrl(), toUpdate.getTags());
             return copy;
         }

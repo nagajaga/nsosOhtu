@@ -58,8 +58,17 @@ public class App {
             if (tags.isEmpty()) {
                 break;
             }
+            boolean read = false;
+            if (editing) {
+                io.print("Mark as read? (enter \"Y\" if read): ");
+                String input = io.nextLine();
+                if (input.equalsIgnoreCase("Y")) {
+                    read = true;
+                }
+            }
             if (editing) {
                 Work work = new Work(author, title, url, tags);
+                work.setRead(read);
                 if (dao.update(work, id) == null) {
                     io.println("Unexpected error\n");
                 }
@@ -77,9 +86,27 @@ public class App {
         if (list.isEmpty()) {
             io.println("No works yet\n");
         } else {
-            io.println("\nAll works:\n");
-            for (Work work : list) {
-                io.println(work + "\n");
+            io.println("All/Read/Unread (A/R/U): ");
+            String subList = io.nextLine();
+            if (subList.equalsIgnoreCase("A")) {
+                io.println("\nAll works:\n");
+                for (Work work : list) {
+                    io.println(work + "\n");
+                }
+            } else if (subList.equalsIgnoreCase("R")) {
+                io.println("\nRead works:\n");
+                for (Work work : list) {
+                    if (work.getRead()) {
+                        io.println(work + "\n");
+                    }
+                }
+            } else if (subList.equalsIgnoreCase("U")) {
+                io.println("\nUnread works:\n");
+                for (Work work : list) {
+                    if (!work.getRead()) {
+                        io.println(work + "\n");
+                    }
+                }
             }
         }
     }

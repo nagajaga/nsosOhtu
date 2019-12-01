@@ -67,7 +67,15 @@ public class FakeWorkDaoTest {
     }
 
     @Test
-    public void searchBySingleTagWorks() {
+    public void searchBySingleTagReturnsEmptyWhenNoResults() {
+        create();
+        FakeWorkDao testDao = (FakeWorkDao) dao;
+        List<Work> results = testDao.searchByTag("fnord");
+        assertTrue(results.isEmpty());
+    }
+
+    @Test
+    public void searchBySingleTagReturnsCorrectResults() {
         create();
         FakeWorkDao testDao = (FakeWorkDao) dao;
         for (String tag : new String[]{"d1", "d2", "d3"}) {

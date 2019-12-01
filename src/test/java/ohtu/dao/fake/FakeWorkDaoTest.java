@@ -2,8 +2,10 @@ package ohtu.dao.fake;
 
 import ohtu.Work;
 import ohtu.dao.Dao;
+
 import static org.junit.Assert.*;
 import java.util.List;
+import ohtu.WorkType;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,7 +43,7 @@ public class FakeWorkDaoTest {
     @Test
     public void update() {
         create();
-        Work testWork = new Work("aa", "bb", "cc", "dd");
+        Work testWork = new Work("aa", "bb", "cc", "dd",WorkType.WEBSITE);
         dao.update(testWork, 1);
         Work work = dao.read(1);
         System.out.println(work.getAuthor());
@@ -94,8 +96,8 @@ public class FakeWorkDaoTest {
     }
 
     private void create() {
-        dao.create(new Work("a1", "b1", "c1", "d1"));
-        dao.create(new Work("a2", "b2", "c2", "d2"));
-        dao.create(new Work("a3", "b3", "c3", "d3"));
+        dao.create(new Work("a1", "b1", "c1", "d1",WorkType.WEBSITE));
+        dao.create(new Work("a2", "b2", "c2", "d2",WorkType.WEBSITE));
+        dao.create(new Work("a3", "b3", "c3", "d3",WorkType.WEBSITE));
     }
 }

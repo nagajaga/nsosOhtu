@@ -6,18 +6,24 @@ public class Work {
     private String title;
     private String url;
     private String tags;
+    private WorkType type;
     private boolean read;
     
-    public Work(String author, String title, String url, String tags) {
+    public Work(String author, String title, String url, String tags, WorkType type) {
         this.author = author;
         this.title = title;
         this.url = url;
         this.tags = tags;
+        this.type = type;
         this.read = false;
     }
     
     public boolean getRead() {
         return this.read;
+    }
+
+    public WorkType getType() {
+        return type;
     }
     
     public Integer getId() {
@@ -63,9 +69,19 @@ public class Work {
     public void setRead(boolean read) {
         this.read = read;
     }
+
+    public void setType(WorkType type) {
+        this.type = type;
+    }
     
     @Override
     public String toString() {
-        return author + ": " + title + "\nURL: " + url + "\nTags: " + tags;
+        if (type.equals(WorkType.WEBSITE)) {
+            return "Website: " + author + ", " + title + "\nURL: " + url + "\nTags: " + tags;
+        }
+        if (type.equals(WorkType.BOOK)) {
+            return "Book: " + author + ", " + title + "\nTags: " + tags;
+        }
+        return null;
     }
 }

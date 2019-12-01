@@ -34,7 +34,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
      */
     @Override
     public Work create(Work work) {
-        Work stored = new Work(work.getAuthor(), work.getTitle(), work.getUrl(), work.getTags());
+        Work stored = new Work(work.getAuthor(), work.getTitle(), work.getUrl(), work.getTags(), work.getType());
         Integer id = 0;
         if (!works.isEmpty()) {
             id = works.get(works.size() - 1).getId() + 1;
@@ -49,7 +49,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
     public Work read(Integer key) {
         Work stored = get(key);
         if (stored != null) {
-            Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags());
+            Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags(), stored.getType());
             copy.setId(stored.getId());
             return copy;
         }
@@ -70,7 +70,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
             toUpdate.setTags(work.getTags());
             toUpdate.setUrl(work.getUrl());
             toUpdate.setRead(work.getRead());
-            Work copy = new Work(toUpdate.getAuthor(), toUpdate.getTitle(), toUpdate.getUrl(), toUpdate.getTags());
+            Work copy = new Work(toUpdate.getAuthor(), toUpdate.getTitle(), toUpdate.getUrl(), toUpdate.getTags(), toUpdate.getType());
             return copy;
         }
         return null;
@@ -90,7 +90,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
     public List<Work> list() {
         List<Work> ret = new ArrayList<>();
         for (Work stored : works) {
-            Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags());
+            Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags(), stored.getType());
             copy.setId(stored.getId());
             copy.setRead(stored.getRead());
             ret.add(copy);
@@ -109,7 +109,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
         List<Work> results = new ArrayList<>();
         for (Work stored : works) {
             if (containsSubstrings(tags, stored.getTags())) {
-                Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags());
+                Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags(), stored.getType());
                 copy.setId(stored.getId());
                 results.add(copy);
             }

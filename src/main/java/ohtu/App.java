@@ -67,13 +67,13 @@ public class App {
                 }
             }
             if (editing) {
-                Work work = new Work(author, title, url, tags);
+                Work work = new Work(author, title, url, tags, WorkType.WEBSITE);
                 work.setRead(read);
                 if (dao.update(work, id) == null) {
                     io.println("Unexpected error\n");
                 }
             } else {
-                dao.create(new Work(author, title, url, tags));
+                dao.create(new Work(author, title, url, tags, WorkType.WEBSITE));
             }
             io.println("Item saved succesfully\n");
             return;

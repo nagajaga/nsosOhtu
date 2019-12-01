@@ -47,25 +47,23 @@ public class FakeWorkDao implements Dao<Work, Integer> {
 
     @Override
     public Work read(Integer key) {
-        if (key < 0 || works.isEmpty()) {
-            return null;
+        Work stored = get(key);
+        if (stored != null) {
+            Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags());
+            copy.setId(stored.getId());
+            return copy;
         }
-        Work stored = null;
-        for (Work work : works) {
-            if (Objects.equals(work.getId(), key)) {
-                stored = work;
-                break;
-            }
-        }
-        if (stored == null) {
-            return null;
-        }
-        return stored;
+        return null;
     }
 
+    /**
+     * Updates the copy stored by the dao to match the new object
+     * @param work the work, identified by the id attribute
+     * @return a copy of the work object in the database
+     */
     @Override
-    public Work update(Work work, Integer id) {
-        Work toUpdate = read(id);
+    public Work update(Work work, Integer key) {
+        Work toUpdate = get(key);
         if (toUpdate != null) {
             toUpdate.setAuthor(work.getAuthor());
             toUpdate.setTitle(work.getTitle());
@@ -79,16 +77,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
 
     @Override
     public boolean delete(Integer key) {
-        if (key < 0 || works.isEmpty()) {
-            return false;
-        }
-        Work toRemove = null;
-        for (Work work : works) {
-            if (Objects.equals(work.getId(), key)) {
-                toRemove = work;
-                break;
-            }
-        }
+        Work toRemove = get(key);
         if (toRemove != null) {
             works.remove(toRemove);
             return true;
@@ -126,6 +115,10 @@ public class FakeWorkDao implements Dao<Work, Integer> {
         return results;
     }
 
+    /*
+     * helper methods
+     */
+
     /**
      * A logical AND substring search
      * @param needles the list of substrings to look for
@@ -138,5 +131,22 @@ public class FakeWorkDao implements Dao<Work, Integer> {
             }
         }
         return true;
+    }
+
+    /**
+     * for internal use; gets the work in the database
+     * @param id the id of the work to look for
+     * @return the internal representation of the work
+     */
+    private Work get(Integer key) {
+        if (key < 0 || works.isEmpty()) {
+            return null;
+        }
+        for (Work stored : works) {
+            if (Objects.equals(stored.getId(), key)) {
+                return stored;
+            }
+        }
+        return null;
     }
 }

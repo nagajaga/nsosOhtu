@@ -92,6 +92,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
         for (Work stored : works) {
             Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags());
             copy.setId(stored.getId());
+            copy.setRead(stored.getRead());
             ret.add(copy);
         }
         return ret;

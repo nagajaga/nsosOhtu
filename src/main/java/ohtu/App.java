@@ -86,7 +86,7 @@ public class App {
         if (list.isEmpty()) {
             io.println("No works yet\n");
         } else {
-            io.println("All/Read/Unread (A/R/U): ");
+            io.print("All/Read/Unread (A/R/U): ");
             String subList = io.nextLine();
             if (subList.equalsIgnoreCase("A")) {
                 io.println("\nAll works:\n");

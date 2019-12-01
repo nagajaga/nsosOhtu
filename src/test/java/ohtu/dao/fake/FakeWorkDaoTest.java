@@ -74,6 +74,12 @@ public class FakeWorkDaoTest {
             List<Work> results = testDao.searchByTag(tag);
             if (results.isEmpty()) {
                 fail("search \"" + tag + " returned an empty list");
+            } else {
+                for (Work work : results) {
+                    if (!work.getTags().contains(tag)) {
+                        fail("search results contained a false positive");
+                    }
+                }
             }
         }
     }

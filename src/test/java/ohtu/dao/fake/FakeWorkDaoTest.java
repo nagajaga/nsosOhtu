@@ -3,6 +3,7 @@ package ohtu.dao.fake;
 import ohtu.Work;
 import ohtu.dao.Dao;
 import static org.junit.Assert.*;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -55,7 +56,7 @@ public class FakeWorkDaoTest {
         assertTrue(dao.list().size() == 2);
         assertTrue(dao.read(1) == null);
     }
-    
+
     @Test
     public void deleteReturnsFalseWithIncorrectInput() {
         assertFalse(dao.delete(0));
@@ -63,6 +64,18 @@ public class FakeWorkDaoTest {
         assertTrue(dao.delete(0));
         assertFalse(dao.delete(-1));
         assertFalse(dao.delete(3));
+    }
+
+    @Test
+    public void searchBySingleTagWorks() {
+        create();
+        FakeWorkDao testDao = (FakeWorkDao) dao;
+        for (String tag : new String[]{"d1", "d2", "d3"}) {
+            List<Work> results = testDao.searchByTag(tag);
+            if (results.isEmpty()) {
+                fail("search \"" + tag + " returned an empty list");
+            }
+        }
     }
 
     private void create() {

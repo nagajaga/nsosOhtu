@@ -1,7 +1,10 @@
 package ohtu;
 
 import java.util.List;
+import java.util.ArrayList;
 import ohtu.dao.Dao;
+import ohtu.WorkType;
+import ohtu.dao.fake.FakeWorkDao;
 import ohtu.io.IO;
 
 public class App {
@@ -19,7 +22,7 @@ public class App {
         io.println("Hello!");
 
         while (true) {
-            io.print("Add/List/Edit/Delete/Quit (A/L/E/D/Q): ");
+            io.print("Add/List/Search/Edit/Delete/Quit (A/L/S/E/D/Q): ");
             String input = io.nextLine();
             if (input.equalsIgnoreCase("Q")) {
                 break;
@@ -27,6 +30,8 @@ public class App {
                 handleAdding(-1, false);
             } else if (input.equalsIgnoreCase("L")) {
                 handleListing();
+            } else if (input.equalsIgnoreCase("S")) {
+                handleSearching();
             } else if (input.equalsIgnoreCase("E")) {
                 handleEditing();
             } else if (input.equalsIgnoreCase("D")) {
@@ -114,16 +119,16 @@ public class App {
             WorkType type = WorkType.NULL;
             boolean anyType = false;
             io.print("Which category? Any/Website/Book (A/W/B): ");
-                String typeString = io.nextLine();
-                if (typeString.equalsIgnoreCase("W")) {
-                    type = WorkType.WEBSITE;
-                } else if (typeString.equalsIgnoreCase("B")) {
-                    type = WorkType.BOOK;
-                } else if (typeString.equalsIgnoreCase("A")) {
-                    anyType = true;
-                } else {
-                    return;
-                }
+            String typeString = io.nextLine();
+            if (typeString.equalsIgnoreCase("W")) {
+                type = WorkType.WEBSITE;
+            } else if (typeString.equalsIgnoreCase("B")) {
+                type = WorkType.BOOK;
+            } else if (typeString.equalsIgnoreCase("A")) {
+                anyType = true;
+            } else {
+                return;
+            }
             if (subList.equalsIgnoreCase("A")) {
                 io.println("\nAll works:\n");
                 for (Work work : list) {
@@ -155,6 +160,20 @@ public class App {
                         } 
                     }
                 }
+            }
+        }
+    }
+
+    private void handleSearching() {
+        List<Work> list = findWorks("tag");
+        if (list == null) {
+            return;
+        } else if (list.isEmpty()) {
+            io.println("No results were returned");
+        } else {
+            io.println("Results:\n");
+            for (Work work : list) {
+                io.println(work + "\n");
             }
         }
     }
@@ -200,5 +219,23 @@ public class App {
             return id;
         }
         return -1;
+    }
+
+    /*
+     * TODO: create interface WorkDao for FakeWorkDao and PersistentWorkDao
+     */
+    private List<Work> findWorks(String type) {
+        io.println("Enter the " + type + " you want to look for (empty string returns):\n");
+        List<Work> results = null;
+        String query = io.nextLine();
+        if (query.isEmpty()) {
+            return null;
+        }
+        if (type.equals("tag")) {
+            results = ((FakeWorkDao) dao).searchByTag(io.nextLine());
+        } else {
+            results = new ArrayList<>();
+        }
+        return results;
     }
 }

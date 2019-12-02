@@ -40,7 +40,7 @@ public class App {
         while (true) {
             WorkType type; 
             while (true) {
-                io.print("Which type? Website/Book (W/B): ");
+                io.print("Which category? Website/Book (W/B): ");
                 String typeString = io.nextLine();
                 if (typeString.equalsIgnoreCase("W")) {
                     type = WorkType.WEBSITE;
@@ -110,23 +110,48 @@ public class App {
         } else {
             io.print("All/Read/Unread (A/R/U): ");
             String subList = io.nextLine();
+            WorkType type = WorkType.NULL;
+            boolean anyType = false;
+            io.print("Which category? Any/Website/Book (A/W/B): ");
+                String typeString = io.nextLine();
+                if (typeString.equalsIgnoreCase("W")) {
+                    type = WorkType.WEBSITE;
+                } else if (typeString.equalsIgnoreCase("B")) {
+                    type = WorkType.BOOK;
+                } else if (typeString.equalsIgnoreCase("A")) {
+                    anyType = true;
+                } else {
+                    return;
+                }
             if (subList.equalsIgnoreCase("A")) {
                 io.println("\nAll works:\n");
                 for (Work work : list) {
-                    io.println(work + "\n");
+                    if(anyType) {
+                        io.println(work + "\n");
+                    } else if (work.getType() == type) {
+                        io.println(work + "\n");
+                    }    
                 }
             } else if (subList.equalsIgnoreCase("R")) {
                 io.println("\nRead works:\n");
                 for (Work work : list) {
                     if (work.getRead()) {
-                        io.println(work + "\n");
+                        if(anyType) {
+                            io.println(work + "\n");
+                        } else if (work.getType() == type) {
+                            io.println(work + "\n");
+                        } 
                     }
                 }
             } else if (subList.equalsIgnoreCase("U")) {
                 io.println("\nUnread works:\n");
                 for (Work work : list) {
                     if (!work.getRead()) {
-                        io.println(work + "\n");
+                        if(anyType) {
+                            io.println(work + "\n");
+                        } else if (work.getType() == type) {
+                            io.println(work + "\n");
+                        } 
                     }
                 }
             }

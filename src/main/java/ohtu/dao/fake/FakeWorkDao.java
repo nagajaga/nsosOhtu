@@ -70,6 +70,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
             toUpdate.setTags(work.getTags());
             toUpdate.setUrl(work.getUrl());
             toUpdate.setRead(work.getRead());
+            toUpdate.setType(work.getType());
             Work copy = new Work(toUpdate.getAuthor(), toUpdate.getTitle(), toUpdate.getUrl(), toUpdate.getTags(), toUpdate.getType());
             return copy;
         }
@@ -93,6 +94,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
             Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags(), stored.getType());
             copy.setId(stored.getId());
             copy.setRead(stored.getRead());
+            copy.setType(stored.getType());
             ret.add(copy);
         }
         return ret;

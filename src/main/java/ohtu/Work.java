@@ -85,10 +85,10 @@ public class Work {
     @Override
     public String toString() {
         if (type.equals(WorkType.WEBSITE)) {
-            return "Website\n " + author + ": " + title + "\nURL: " + url + "\nTags: " + tags;
+            return "Website\n" + author + ": " + title + "\nURL: " + url + "\nTags: " + tags;
         }
         if (type.equals(WorkType.BOOK)) {
-            return "Book\n " + author + ": " + title + "\nTags: " + tags;
+            return "Book\n" + author + ": " + title + "\nTags: " + tags;
         }
         return null;
     }

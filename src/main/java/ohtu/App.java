@@ -38,6 +38,18 @@ public class App {
 
     private void handleAdding(int id, boolean editing) {
         while (true) {
+            WorkType type; 
+            while (true) {
+                io.print("Which type? Website/Book (W/B): ");
+                String typeString = io.nextLine();
+                if (typeString.equalsIgnoreCase("W")) {
+                    type = WorkType.WEBSITE;
+                    break;
+                } else if (typeString.equalsIgnoreCase("B")) {
+                    type = WorkType.BOOK;
+                    break;
+                }
+            }
             io.print("Author: ");
             String author = io.nextLine();
             if (author.isEmpty()) {
@@ -48,10 +60,13 @@ public class App {
             if (title.isEmpty()) {
                 break;
             }
-            io.print("URL (enter \"-\" if empty): ");
-            String url = io.nextLine();
-            if (url.isEmpty()) {
-                break;
+            String url = "";
+            if (type.equals(WorkType.WEBSITE)) {
+                io.print("URL: ");
+                url = io.nextLine();
+                if (url.isEmpty()) {
+                    break;
+                }
             }
             io.print("Tags (separate by \",\" , enter \"-\" if empty): ");
             String tags = io.nextLine();
@@ -67,13 +82,20 @@ public class App {
                 }
             }
             if (editing) {
-                Work work = new Work(author, title, url, tags, WorkType.WEBSITE);
+                Work work = new Work(author, title, tags, type);
+                if (type.equals(WorkType.WEBSITE)) {
+                    work.setUrl(url);
+                }
                 work.setRead(read);
                 if (dao.update(work, id) == null) {
                     io.println("Unexpected error\n");
                 }
             } else {
-                dao.create(new Work(author, title, url, tags, WorkType.WEBSITE));
+                if (type.equals(WorkType.WEBSITE)) {
+                    dao.create(new Work(author, title, url, tags, type));
+                } else if (type.equals(WorkType.BOOK)) {
+                    dao.create(new Work(author, title, tags, type));
+                }
             }
             io.println("Item saved succesfully\n");
             return;

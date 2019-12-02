@@ -18,6 +18,14 @@ public class Work {
         this.read = false;
     }
     
+    public Work(String author, String title, String tags, WorkType type) {
+        this.author = author;
+        this.title = title;
+        this.tags = tags;
+        this.type = type;
+        this.read = false;
+    }
+    
     public boolean getRead() {
         return this.read;
     }
@@ -77,10 +85,10 @@ public class Work {
     @Override
     public String toString() {
         if (type.equals(WorkType.WEBSITE)) {
-            return "Website: " + author + ", " + title + "\nURL: " + url + "\nTags: " + tags;
+            return "Website\n " + author + ": " + title + "\nURL: " + url + "\nTags: " + tags;
         }
         if (type.equals(WorkType.BOOK)) {
-            return "Book: " + author + ", " + title + "\nTags: " + tags;
+            return "Book\n " + author + ": " + title + "\nTags: " + tags;
         }
         return null;
     }

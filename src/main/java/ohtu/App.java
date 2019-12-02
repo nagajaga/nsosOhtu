@@ -87,7 +87,8 @@ public class App {
                     work.setUrl(url);
                 }
                 work.setRead(read);
-                if (dao.update(work, id) == null) {
+                work.setId(id);
+                if (dao.update(work) == null) {
                     io.println("Unexpected error\n");
                 }
             } else {

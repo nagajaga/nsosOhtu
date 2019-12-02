@@ -62,8 +62,8 @@ public class FakeWorkDao implements Dao<Work, Integer> {
      * @return a copy of the work object in the database
      */
     @Override
-    public Work update(Work work, Integer key) {
-        Work toUpdate = get(key);
+    public Work update(Work work) {
+        Work toUpdate = get(work.getId());
         if (toUpdate != null) {
             toUpdate.setAuthor(work.getAuthor());
             toUpdate.setTitle(work.getTitle());

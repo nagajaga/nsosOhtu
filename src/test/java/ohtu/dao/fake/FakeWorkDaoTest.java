@@ -44,7 +44,8 @@ public class FakeWorkDaoTest {
     public void update() {
         create();
         Work testWork = new Work("aa", "bb", "cc", "dd",WorkType.WEBSITE);
-        dao.update(testWork, 1);
+        testWork.setId(1);
+        dao.update(testWork);
         Work work = dao.read(1);
         System.out.println(work.getAuthor());
         assertTrue(work.getAuthor().equals("aa"));

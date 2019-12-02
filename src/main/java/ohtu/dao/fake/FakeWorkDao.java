@@ -51,6 +51,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
         if (stored != null) {
             Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags(), stored.getType());
             copy.setId(stored.getId());
+            copy.setRead(stored.getRead());
             return copy;
         }
         return null;

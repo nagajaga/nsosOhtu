@@ -43,66 +43,40 @@ public class App {
 
     private void handleAdding(int id, boolean editing) {
         while (true) {
-            WorkType type; 
-            while (true) {
-                io.print("Which category? Website/Book (W/B): ");
-                String typeString = io.nextLine();
-                if (typeString.equalsIgnoreCase("W")) {
-                    type = WorkType.WEBSITE;
-                    break;
-                } else if (typeString.equalsIgnoreCase("B")) {
-                    type = WorkType.BOOK;
+            Work copy = null;
+            WorkType type = null;
+            if (editing) {
+                copy = dao.read(id);
+                if (copy == null) {
+                    io.println("Invalid id");
                     break;
                 }
             }
-            io.print("Author: ");
-            String author = io.nextLine();
-            if (author.isEmpty()) {
+            type = askType(editing, copy);
+            String author = askAuthor(editing, copy);
+            if (author == null) {
                 break;
             }
-            io.print("Title: ");
-            String title = io.nextLine();
-            if (title.isEmpty()) {
+            String title = askTitle(editing, copy);
+            if (title == null) {
                 break;
             }
             String url = "";
             if (type.equals(WorkType.WEBSITE)) {
-                io.print("URL: ");
-                url = io.nextLine();
-                if (url.isEmpty()) {
+                url = askUrl(editing, copy);
+                if (url == null) {
                     break;
                 }
             }
-            io.print("Tags (separate by \",\" , enter \"-\" if empty): ");
-            String tags = io.nextLine();
-            if (tags.isEmpty()) {
+            String tags = askTags(editing, copy);
+            if (tags == null) {
                 break;
             }
             boolean read = false;
             if (editing) {
-                io.print("Mark as read? (enter \"Y\" if read): ");
-                String input = io.nextLine();
-                if (input.equalsIgnoreCase("Y")) {
-                    read = true;
-                }
+                read = askRead(editing, copy);
             }
-            if (editing) {
-                Work work = new Work(author, title, tags, type);
-                if (type.equals(WorkType.WEBSITE)) {
-                    work.setUrl(url);
-                }
-                work.setRead(read);
-                work.setId(id);
-                if (dao.update(work) == null) {
-                    io.println("Unexpected error\n");
-                }
-            } else {
-                if (type.equals(WorkType.WEBSITE)) {
-                    dao.create(new Work(author, title, url, tags, type));
-                } else if (type.equals(WorkType.BOOK)) {
-                    dao.create(new Work(author, title, tags, type));
-                }
-            }
+            createWork(editing, author, title, tags, type, url, read, id);
             io.println("Item saved succesfully\n");
             return;
         }
@@ -132,32 +106,32 @@ public class App {
             if (subList.equalsIgnoreCase("A")) {
                 io.println("\nAll works:\n");
                 for (Work work : list) {
-                    if(anyType) {
+                    if (anyType) {
                         io.println(work + "\n");
                     } else if (work.getType() == type) {
                         io.println(work + "\n");
-                    }    
+                    }
                 }
             } else if (subList.equalsIgnoreCase("R")) {
                 io.println("\nRead works:\n");
                 for (Work work : list) {
                     if (work.getRead()) {
-                        if(anyType) {
+                        if (anyType) {
                             io.println(work + "\n");
                         } else if (work.getType() == type) {
                             io.println(work + "\n");
-                        } 
+                        }
                     }
                 }
             } else if (subList.equalsIgnoreCase("U")) {
                 io.println("\nUnread works:\n");
                 for (Work work : list) {
                     if (!work.getRead()) {
-                        if(anyType) {
+                        if (anyType) {
                             io.println(work + "\n");
                         } else if (work.getType() == type) {
                             io.println(work + "\n");
-                        } 
+                        }
                     }
                 }
             }
@@ -181,6 +155,7 @@ public class App {
     private void handleEditing() {
         int id = askId("edit");
         if (id >= 0 && dao.read(id) != null) {
+            io.println("Keep the old information between \"()\" by pressing enter or type new information to update.");
             handleAdding(id, true);
         } else if (!dao.list().isEmpty()) {
             io.println("Item not found\n");
@@ -237,5 +212,128 @@ public class App {
             results = new ArrayList<>();
         }
         return results;
+    }
+
+    private WorkType askType(boolean editing, Work copy) {
+        WorkType type = null;
+        while (true) {
+            io.print("Which category? Website/Book (W/B): ");
+            if (editing) {
+                if (copy.getType().equals(WorkType.WEBSITE)) {
+                    io.print("(W) ");
+                } else if (copy.getType().equals(WorkType.BOOK)) {
+                    io.print("(B) ");
+                }
+            }
+            String typeString = io.nextLine();
+            if (editing && typeString.equalsIgnoreCase("")) {
+                type = copy.getType();
+                break;
+            }
+            if (typeString.equalsIgnoreCase("W")) {
+                type = WorkType.WEBSITE;
+                break;
+            } else if (typeString.equalsIgnoreCase("B")) {
+                type = WorkType.BOOK;
+                break;
+            }
+        }
+        return type;
+    }
+
+    private String askAuthor(boolean editing, Work copy) {
+        io.print("Author: ");
+        if (editing) {
+            io.print("(" + copy.getAuthor() + ") ");
+        }
+        String author = io.nextLine();
+        if (editing && author.equalsIgnoreCase("")) {
+            author = copy.getAuthor();
+        }
+        if (!editing && author.isEmpty()) {
+            return null;
+        }
+        return author;
+    }
+
+    private String askTitle(boolean editing, Work copy) {
+        io.print("Title: ");
+        if (editing) {
+            io.print("(" + copy.getTitle() + ") ");
+        }
+        String title = io.nextLine();
+        if (editing && title.equalsIgnoreCase("")) {
+            title = copy.getTitle();
+        }
+        if (!editing && title.isEmpty()) {
+            return null;
+        }
+        return title;
+    }
+
+    private String askUrl(boolean editing, Work copy) {
+        String url = "";
+        io.print("URL: ");
+        if (editing) {
+            io.print("(" + ((copy.getUrl() == null) ? "" : copy.getUrl()) + ") ");
+        }
+        url = io.nextLine();
+        if (editing && url.equalsIgnoreCase("")) {
+            url = copy.getUrl();
+        }
+        if (!editing && url.isEmpty()) {
+            return null;
+        }
+        return url;
+    }
+
+    private String askTags(boolean editing, Work copy) {
+        io.print("Tags (separate by \",\" , enter \"-\" if empty): ");
+        if (editing) {
+            io.print("(" + copy.getTags() + ") ");
+        }
+        String tags = io.nextLine();
+        if (editing && tags.equalsIgnoreCase("")) {
+            tags = copy.getTags();
+        }
+        if (!editing && tags.isEmpty()) {
+            return null;
+        }
+        return tags;
+    }
+
+    private boolean askRead(boolean editing, Work copy) {
+        boolean read = false;
+        io.print("Mark as read? (enter \"Y\" if read): ");
+        if (editing) {
+            io.print(copy.getRead() ? "(Y) " : "(NO) ");
+        }
+        String input = io.nextLine();
+        if (editing && input.equalsIgnoreCase("")) {
+            read = copy.getRead();
+        } else if (input.equalsIgnoreCase("Y")) {
+            read = true;
+        }
+        return read;
+    }
+
+    private void createWork(boolean editing, String author, String title, String tags, WorkType type, String url, boolean read, int id) {
+        if (editing) {
+            Work work = new Work(author, title, tags, type);
+            if (type.equals(WorkType.WEBSITE)) {
+                work.setUrl(url);
+            }
+            work.setRead(read);
+            work.setId(id);
+            if (dao.update(work) == null) {
+                io.println("Unexpected error\n");
+            }
+        } else {
+            if (type.equals(WorkType.WEBSITE)) {
+                dao.create(new Work(author, title, url, tags, type));
+            } else if (type.equals(WorkType.BOOK)) {
+                dao.create(new Work(author, title, tags, type));
+            }
+        }
     }
 }

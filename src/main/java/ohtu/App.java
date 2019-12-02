@@ -232,7 +232,7 @@ public class App {
             return null;
         }
         if (type.equals("tag")) {
-            results = ((FakeWorkDao) dao).searchByTag(io.nextLine());
+            results = ((FakeWorkDao) dao).searchByTag(query);
         } else {
             results = new ArrayList<>();
         }

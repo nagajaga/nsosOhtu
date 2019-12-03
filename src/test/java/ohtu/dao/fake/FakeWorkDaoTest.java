@@ -24,12 +24,12 @@ public class FakeWorkDaoTest {
         create();
         assertTrue(dao.list().size() == 3);
         Work work1 = dao.read(0);
-        Work Work = dao.read(1);
+        Work Work2 = dao.read(1);
         Work work3 = dao.read(2);
         assertEquals(work1.getAuthor(), "a1");
         assertEquals(work1.getTitle(), "b1");
-        assertEquals(Work.getAuthor(), "a2");
-        assertEquals(Work.getTitle(), "b2");
+        assertEquals(Work2.getAuthor(), "a2");
+        assertEquals(Work2.getTitle(), "b2");
         assertEquals(work3.getTitle(), "b3");
     }
 

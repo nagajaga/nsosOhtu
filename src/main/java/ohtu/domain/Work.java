@@ -1,4 +1,4 @@
-package ohtu;
+package ohtu.domain;
 
 public class Work {
     private Integer id;

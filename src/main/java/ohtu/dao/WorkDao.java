@@ -5,14 +5,14 @@
 package ohtu.dao;
 
 import java.util.List;
-import ohtu.Work;
+import ohtu.domain.Work;
 import ohtu.dao.Dao;
 
 public interface WorkDao extends Dao<Work, Integer> {
 
     /**
-     * creates a copy of the object given to it and stores that into the list,
-     * then updates the id on both the copy in use and the stored copy
+     * creates the data in the the object work into the database,
+     * then updates its id to match that returned by the database
      *
      * @param work the work to be stored in the database
      * @return

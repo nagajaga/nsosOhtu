@@ -4,7 +4,7 @@ import ohtu.dao.WorkDao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import ohtu.Work;
+import ohtu.domain.Work;
 import ohtu.dao.Dao;
 
 /**

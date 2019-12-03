@@ -1,5 +1,7 @@
 package ohtu;
 
+import ohtu.domain.Work;
+import ohtu.domain.WorkType;
 import static org.junit.Assert.*;
 import org.junit.Test;
 

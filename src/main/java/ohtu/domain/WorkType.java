@@ -1,4 +1,4 @@
-package ohtu;
+package ohtu.domain;
 
 public enum WorkType {
     WEBSITE,

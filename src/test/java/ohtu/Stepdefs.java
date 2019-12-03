@@ -1,5 +1,7 @@
 package ohtu;
 
+import ohtu.domain.Work;
+import ohtu.domain.WorkType;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;

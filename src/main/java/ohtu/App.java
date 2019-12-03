@@ -1,9 +1,10 @@
 package ohtu;
 
+import ohtu.domain.Work;
 import java.util.List;
 import java.util.ArrayList;
 import ohtu.dao.Dao;
-import ohtu.WorkType;
+import ohtu.domain.WorkType;
 import ohtu.dao.fake.FakeWorkDao;
 import ohtu.io.IO;
 

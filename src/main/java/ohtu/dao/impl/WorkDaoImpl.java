@@ -5,7 +5,7 @@
 package ohtu.dao.impl;
 
 import java.util.List;
-import ohtu.Work;
+import ohtu.domain.Work;
 import ohtu.dao.WorkDao;
 
 public class WorkDaoImpl implements WorkDao {

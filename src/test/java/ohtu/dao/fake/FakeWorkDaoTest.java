@@ -1,11 +1,11 @@
 package ohtu.dao.fake;
 
-import ohtu.Work;
+import ohtu.domain.Work;
 import ohtu.dao.Dao;
 
 import static org.junit.Assert.*;
 import java.util.List;
-import ohtu.WorkType;
+import ohtu.domain.WorkType;
 import org.junit.Before;
 import org.junit.Test;
 

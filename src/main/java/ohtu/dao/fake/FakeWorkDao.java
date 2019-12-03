@@ -1,5 +1,6 @@
 package ohtu.dao.fake;
 
+import ohtu.dao.WorkDao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,7 +10,7 @@ import ohtu.dao.Dao;
 /**
  * A non-persistent placeholder for WorkDao Implemented as a singleton
  */
-public class FakeWorkDao implements Dao<Work, Integer> {
+public class FakeWorkDao implements WorkDao {
 
     private static FakeWorkDao INSTANCE;
     private ArrayList<Work> works;
@@ -101,6 +102,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
         return ret;
     }
 
+    @Override
     public List<Work> searchByTag(String tag) {
         List<String> list = new ArrayList<String>();
         list.add(tag);
@@ -108,6 +110,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
         return results;
     }
 
+    @Override
     public List<Work> searchByTag(List<String> tags) {
         List<Work> results = new ArrayList<>();
         for (Work stored : works) {

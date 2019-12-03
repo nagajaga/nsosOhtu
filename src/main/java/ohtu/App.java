@@ -2,8 +2,12 @@ package ohtu;
 
 import java.util.List;
 import java.util.ArrayList;
+
+import ohtu.Domain.Book;
+import ohtu.Domain.Website;
+import ohtu.Domain.Work;
 import ohtu.dao.Dao;
-import ohtu.WorkType;
+import ohtu.Domain.WorkType;
 import ohtu.dao.fake.FakeWorkDao;
 import ohtu.io.IO;
 
@@ -319,7 +323,7 @@ public class App {
 
     private void createWork(boolean editing, String author, String title, String tags, WorkType type, String url, boolean read, int id) {
         if (editing) {
-            Work work = new Work(author, title, tags, type);
+            Work work = new Book(author, title, tags, type);
             if (type.equals(WorkType.WEBSITE)) {
                 work.setUrl(url);
             }
@@ -330,9 +334,9 @@ public class App {
             }
         } else {
             if (type.equals(WorkType.WEBSITE)) {
-                dao.create(new Work(author, title, url, tags, type));
+                dao.create(new Website(author, title, url, tags, type));
             } else if (type.equals(WorkType.BOOK)) {
-                dao.create(new Work(author, title, tags, type));
+                dao.create(new Book(author, title, tags, type));
             }
         }
     }

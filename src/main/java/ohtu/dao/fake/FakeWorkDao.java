@@ -3,7 +3,11 @@ package ohtu.dao.fake;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import ohtu.Work;
+
+import ohtu.Domain.Book;
+import ohtu.Domain.Website;
+import ohtu.Domain.Work;
+import ohtu.Domain.WorkType;
 import ohtu.dao.Dao;
 
 /**
@@ -34,7 +38,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
      */
     @Override
     public Work create(Work work) {
-        Work stored = new Work(work.getAuthor(), work.getTitle(), work.getUrl(), work.getTags(), work.getType());
+        Work stored = createCopy(work);
         Integer id = 0;
         if (!works.isEmpty()) {
             id = works.get(works.size() - 1).getId() + 1;
@@ -49,7 +53,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
     public Work read(Integer key) {
         Work stored = get(key);
         if (stored != null) {
-            Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags(), stored.getType());
+            Work copy = createCopy(stored);
             copy.setId(stored.getId());
             copy.setRead(stored.getRead());
             return copy;
@@ -72,7 +76,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
             toUpdate.setUrl(work.getUrl());
             toUpdate.setRead(work.getRead());
             toUpdate.setType(work.getType());
-            Work copy = new Work(toUpdate.getAuthor(), toUpdate.getTitle(), toUpdate.getUrl(), toUpdate.getTags(), toUpdate.getType());
+            Work copy = createCopy(toUpdate);
             return copy;
         }
         return null;
@@ -92,7 +96,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
     public List<Work> list() {
         List<Work> ret = new ArrayList<>();
         for (Work stored : works) {
-            Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags(), stored.getType());
+            Work copy = createCopy(stored);
             copy.setId(stored.getId());
             copy.setRead(stored.getRead());
             copy.setType(stored.getType());
@@ -112,7 +116,7 @@ public class FakeWorkDao implements Dao<Work, Integer> {
         List<Work> results = new ArrayList<>();
         for (Work stored : works) {
             if (containsSubstrings(tags, stored.getTags())) {
-                Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getTags(), stored.getType());
+                Work copy = createCopy(stored);
                 copy.setId(stored.getId());
                 results.add(copy);
             }
@@ -153,5 +157,13 @@ public class FakeWorkDao implements Dao<Work, Integer> {
             }
         }
         return null;
+    }
+
+    private Work createCopy(Work work) {
+        if (work.getType() == WorkType.BOOK) {
+            return new Book(work.getAuthor(), work.getTitle(), work.getTags(), work.getType());
+        } else {
+            return new Website(work.getAuthor(), work.getTitle(), work.getUrl(), work.getTags(), work.getType());
+        }
     }
 }

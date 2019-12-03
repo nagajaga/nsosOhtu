@@ -1,6 +1,7 @@
-package ohtu;
+package ohtu.Domain;
 
-public class Work {
+public class Book implements Work {
+
     private Integer id;
     private String author;
     private String title;
@@ -8,24 +9,15 @@ public class Work {
     private String tags;
     private WorkType type;
     private boolean read;
-    
-    public Work(String author, String title, String url, String tags, WorkType type) {
-        this.author = author;
-        this.title = title;
-        this.url = url;
-        this.tags = tags;
-        this.type = type;
-        this.read = false;
-    }
-    
-    public Work(String author, String title, String tags, WorkType type) {
+
+    public Book(String author, String title, String tags, WorkType type) {
         this.author = author;
         this.title = title;
         this.tags = tags;
         this.type = type;
         this.read = false;
     }
-    
+
     public boolean getRead() {
         return this.read;
     }
@@ -33,20 +25,19 @@ public class Work {
     public WorkType getType() {
         return type;
     }
-    
+
     public Integer getId() {
         return id;
     }
-    
+
     public String getUrl(){
         return this.url;
     }
-    
 
     public String getAuthor(){
         return this.author;
     }
-    
+
     public String getTags(){
         return this.tags;
     }
@@ -66,11 +57,11 @@ public class Work {
     public void setTitle(String title) {
         this.title = title;
     }
-    
+
     public void setUrl(String url) {
         this.url = url;
     }
-    
+
     public void setTags(String tags) {
         this.tags = tags;
     }
@@ -81,15 +72,9 @@ public class Work {
     public void setType(WorkType type) {
         this.type = type;
     }
-    
+
     @Override
     public String toString() {
-        if (type.equals(WorkType.WEBSITE)) {
-            return "Website\n" + author + ": " + title + "\nURL: " + url + "\nTags: " + tags;
-        }
-        if (type.equals(WorkType.BOOK)) {
-            return "Book\n" + author + ": " + title + "\nTags: " + tags;
-        }
-        return null;
+        return "Book\n" + author + ": " + title + "\nTags: " + tags;
     }
 }

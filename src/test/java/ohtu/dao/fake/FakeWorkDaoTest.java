@@ -1,11 +1,12 @@
 package ohtu.dao.fake;
 
-import ohtu.Work;
+import ohtu.Domain.Website;
+import ohtu.Domain.Work;
 import ohtu.dao.Dao;
 
 import static org.junit.Assert.*;
 import java.util.List;
-import ohtu.WorkType;
+import ohtu.Domain.WorkType;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,12 +24,12 @@ public class FakeWorkDaoTest {
         create();
         assertTrue(dao.list().size() == 3);
         Work work1 = dao.read(0);
-        Work work2 = dao.read(1);
+        Work Work = dao.read(1);
         Work work3 = dao.read(2);
         assertEquals(work1.getAuthor(), "a1");
         assertEquals(work1.getTitle(), "b1");
-        assertEquals(work2.getAuthor(), "a2");
-        assertEquals(work2.getTitle(), "b2");
+        assertEquals(Work.getAuthor(), "a2");
+        assertEquals(Work.getTitle(), "b2");
         assertEquals(work3.getTitle(), "b3");
     }
 
@@ -43,7 +44,7 @@ public class FakeWorkDaoTest {
     @Test
     public void update() {
         create();
-        Work testWork = new Work("aa", "bb", "cc", "dd",WorkType.WEBSITE);
+        Work testWork = new Website("aa", "bb", "cc", "dd",WorkType.WEBSITE);
         testWork.setId(1);
         dao.update(testWork);
         Work work = dao.read(1);
@@ -96,8 +97,8 @@ public class FakeWorkDaoTest {
     }
 
     private void create() {
-        dao.create(new Work("a1", "b1", "c1", "d1",WorkType.WEBSITE));
-        dao.create(new Work("a2", "b2", "c2", "d2",WorkType.WEBSITE));
-        dao.create(new Work("a3", "b3", "c3", "d3",WorkType.WEBSITE));
+        dao.create(new Website("a1", "b1", "c1", "d1",WorkType.WEBSITE));
+        dao.create(new Website("a2", "b2", "c2", "d2",WorkType.WEBSITE));
+        dao.create(new Website("a3", "b3", "c3", "d3",WorkType.WEBSITE));
     }
 }

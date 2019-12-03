@@ -4,6 +4,10 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
+import ohtu.Domain.Website;
+import ohtu.Domain.Work;
+import ohtu.Domain.WorkType;
+
 import static org.junit.Assert.*;
 
 public class Stepdefs {
@@ -16,7 +20,7 @@ public class Stepdefs {
 
     @Given("bookmark of a book is initialized")
     public void bookmarkOfABookIsInitialized() throws Throwable {
-        work = new Work("", "", "", "", WorkType.WEBSITE);
+        work = new Website("", "", "", "", WorkType.WEBSITE);
     }
 
     @When("bookmark title is set to {string}")

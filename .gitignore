@@ -1,6 +1,7 @@
 # Gradle
 /*.tmp
-/build/
+/build/*
+!/build/reports/jacoco/test/html
 /.gradle/
 /.nb-gradle/
 

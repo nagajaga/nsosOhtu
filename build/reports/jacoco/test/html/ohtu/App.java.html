@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nsosOhtu</a> &gt; <a href="index.source.html" class="el_package">ohtu</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">package ohtu;
+
+import ohtu.domain.Work;
+import java.util.List;
+import java.util.ArrayList;
+import ohtu.dao.Dao;
+import ohtu.domain.WorkType;
+import ohtu.dao.fake.FakeWorkDao;
+import ohtu.io.IO;
+
+public class App {
+
+    private IO io;
+    private Dao&lt;Work, Integer&gt; dao;
+
+<span class="nc" id="L16">    public App(IO io, Dao&lt;Work, Integer&gt; dao) {</span>
+<span class="nc" id="L17">        this.io = io;</span>
+<span class="nc" id="L18">        this.dao = dao;</span>
+<span class="nc" id="L19">    }</span>
+
+    public void run() {
+
+<span class="nc" id="L23">        io.println(&quot;Hello!&quot;);</span>
+
+        while (true) {
+<span class="nc" id="L26">            io.print(&quot;Add/List/Search/Edit/Delete/Quit (A/L/S/E/D/Q): &quot;);</span>
+<span class="nc" id="L27">            String input = io.nextLine();</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">            if (input.equalsIgnoreCase(&quot;Q&quot;)) {</span>
+<span class="nc" id="L29">                break;</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">            } else if (input.equalsIgnoreCase(&quot;A&quot;)) {</span>
+<span class="nc" id="L31">                handleAdding(-1, false);</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">            } else if (input.equalsIgnoreCase(&quot;L&quot;)) {</span>
+<span class="nc" id="L33">                handleListing();</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">            } else if (input.equalsIgnoreCase(&quot;S&quot;)) {</span>
+<span class="nc" id="L35">                handleSearching();</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">            } else if (input.equalsIgnoreCase(&quot;E&quot;)) {</span>
+<span class="nc" id="L37">                handleEditing();</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">            } else if (input.equalsIgnoreCase(&quot;D&quot;)) {</span>
+<span class="nc" id="L39">                handleDeleting();</span>
+            }
+<span class="nc" id="L41">        }</span>
+<span class="nc" id="L42">        io.println(&quot;\nGoodbye!&quot;);</span>
+<span class="nc" id="L43">    }</span>
+
+    private void handleAdding(int id, boolean editing) {
+        while (true) {
+<span class="nc" id="L47">            Work copy = null;</span>
+<span class="nc" id="L48">            WorkType type = null;</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">            if (editing) {</span>
+<span class="nc" id="L50">                copy = dao.read(id);</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">                if (copy == null) {</span>
+<span class="nc" id="L52">                    io.println(&quot;Invalid id&quot;);</span>
+<span class="nc" id="L53">                    break;</span>
+                }
+            }
+<span class="nc" id="L56">            type = askType(editing, copy);</span>
+<span class="nc" id="L57">            String author = askAuthor(editing, copy);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">            if (author == null) {</span>
+<span class="nc" id="L59">                break;</span>
+            }
+<span class="nc" id="L61">            String title = askTitle(editing, copy);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (title == null) {</span>
+<span class="nc" id="L63">                break;</span>
+            }
+<span class="nc" id="L65">            String url = &quot;&quot;;</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">            if (type.equals(WorkType.WEBSITE)) {</span>
+<span class="nc" id="L67">                url = askUrl(editing, copy);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">                if (url == null) {</span>
+<span class="nc" id="L69">                    break;</span>
+                }
+            }
+<span class="nc" id="L72">            String tags = askTags(editing, copy);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            if (tags == null) {</span>
+<span class="nc" id="L74">                break;</span>
+            }
+<span class="nc" id="L76">            boolean read = false;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">            if (editing) {</span>
+<span class="nc" id="L78">                read = askRead(editing, copy);</span>
+            }
+<span class="nc" id="L80">            createWork(editing, author, title, tags, type, url, read, id);</span>
+<span class="nc" id="L81">            io.println(&quot;Item saved succesfully\n&quot;);</span>
+<span class="nc" id="L82">            return;</span>
+        }
+<span class="nc" id="L84">        io.println(&quot;Field must not be blank\n&quot;);</span>
+<span class="nc" id="L85">    }</span>
+
+    private void handleListing() {
+<span class="nc" id="L88">        List&lt;Work&gt; list = dao.list();</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        if (list.isEmpty()) {</span>
+<span class="nc" id="L90">            io.println(&quot;No works yet\n&quot;);</span>
+        } else {
+<span class="nc" id="L92">            io.print(&quot;All/Read/Unread (A/R/U): &quot;);</span>
+<span class="nc" id="L93">            String subList = io.nextLine();</span>
+<span class="nc" id="L94">            WorkType type = WorkType.NULL;</span>
+<span class="nc" id="L95">            boolean anyType = false;</span>
+<span class="nc" id="L96">            io.print(&quot;Which category? Any/Website/Book (A/W/B): &quot;);</span>
+<span class="nc" id="L97">            String typeString = io.nextLine();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">            if (typeString.equalsIgnoreCase(&quot;W&quot;)) {</span>
+<span class="nc" id="L99">                type = WorkType.WEBSITE;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            } else if (typeString.equalsIgnoreCase(&quot;B&quot;)) {</span>
+<span class="nc" id="L101">                type = WorkType.BOOK;</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">            } else if (typeString.equalsIgnoreCase(&quot;A&quot;)) {</span>
+<span class="nc" id="L103">                anyType = true;</span>
+            } else {
+<span class="nc" id="L105">                return;</span>
+            }
+<span class="nc bnc" id="L107" title="All 2 branches missed.">            if (subList.equalsIgnoreCase(&quot;A&quot;)) {</span>
+<span class="nc" id="L108">                io.println(&quot;\nAll works:\n&quot;);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">                for (Work work : list) {</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">                    if (anyType) {</span>
+<span class="nc" id="L111">                        io.println(work + &quot;\n&quot;);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">                    } else if (work.getType() == type) {</span>
+<span class="nc" id="L113">                        io.println(work + &quot;\n&quot;);</span>
+                    }
+<span class="nc" id="L115">                }</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">            } else if (subList.equalsIgnoreCase(&quot;R&quot;)) {</span>
+<span class="nc" id="L117">                io.println(&quot;\nRead works:\n&quot;);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">                for (Work work : list) {</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">                    if (work.getRead()) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">                        if (anyType) {</span>
+<span class="nc" id="L121">                            io.println(work + &quot;\n&quot;);</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">                        } else if (work.getType() == type) {</span>
+<span class="nc" id="L123">                            io.println(work + &quot;\n&quot;);</span>
+                        }
+                    }
+<span class="nc" id="L126">                }</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">            } else if (subList.equalsIgnoreCase(&quot;U&quot;)) {</span>
+<span class="nc" id="L128">                io.println(&quot;\nUnread works:\n&quot;);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">                for (Work work : list) {</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">                    if (!work.getRead()) {</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">                        if (anyType) {</span>
+<span class="nc" id="L132">                            io.println(work + &quot;\n&quot;);</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">                        } else if (work.getType() == type) {</span>
+<span class="nc" id="L134">                            io.println(work + &quot;\n&quot;);</span>
+                        }
+                    }
+<span class="nc" id="L137">                }</span>
+            }
+        }
+<span class="nc" id="L140">    }</span>
+
+    private void handleSearching() {
+<span class="nc" id="L143">        List&lt;Work&gt; list = findWorks(&quot;tag&quot;);</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">        if (list == null) {</span>
+<span class="nc" id="L145">            return;</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        } else if (list.isEmpty()) {</span>
+<span class="nc" id="L147">            io.println(&quot;No results were returned&quot;);</span>
+        } else {
+<span class="nc" id="L149">            io.println(&quot;Results:\n&quot;);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">            for (Work work : list) {</span>
+<span class="nc" id="L151">                io.println(work + &quot;\n&quot;);</span>
+<span class="nc" id="L152">            }</span>
+        }
+<span class="nc" id="L154">    }</span>
+
+    private void handleEditing() {
+<span class="nc" id="L157">        int id = askId(&quot;edit&quot;);</span>
+<span class="nc bnc" id="L158" title="All 4 branches missed.">        if (id &gt;= 0 &amp;&amp; dao.read(id) != null) {</span>
+<span class="nc" id="L159">            io.println(&quot;Keep the old information between \&quot;()\&quot; by pressing enter or type new information to update.&quot;);</span>
+<span class="nc" id="L160">            handleAdding(id, true);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        } else if (!dao.list().isEmpty()) {</span>
+<span class="nc" id="L162">            io.println(&quot;Item not found\n&quot;);</span>
+        }
+<span class="nc" id="L164">    }</span>
+
+    private void handleDeleting() {
+<span class="nc" id="L167">        int id = askId(&quot;delete&quot;);</span>
+<span class="nc bnc" id="L168" title="All 4 branches missed.">        if (id &gt;= 0 &amp;&amp; dao.read(id) != null) {</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">            if (dao.delete(id)) {</span>
+<span class="nc" id="L170">                io.println(&quot;Item removed succesfully\n&quot;);</span>
+            } else {
+<span class="nc" id="L172">                io.println(&quot;Unexpected error\n&quot;);</span>
+            }
+<span class="nc bnc" id="L174" title="All 2 branches missed.">        } else if (!dao.list().isEmpty()) {</span>
+<span class="nc" id="L175">            io.println(&quot;Item not found\n&quot;);</span>
+        }
+<span class="nc" id="L177">    }</span>
+
+    private int askId(String method) {
+<span class="nc" id="L180">        List&lt;Work&gt; list = dao.list();</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">        if (list.isEmpty()) {</span>
+<span class="nc" id="L182">            io.println(&quot;No works yet\n&quot;);</span>
+        } else {
+<span class="nc" id="L184">            io.println(&quot;\nEnter the id of the item you want to &quot; + method + &quot;:\n&quot;);</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">            for (Work work : list) {</span>
+<span class="nc" id="L186">                io.println(&quot;id: &quot; + work.getId() + &quot;\n&quot; + work + &quot;\n&quot;);</span>
+<span class="nc" id="L187">            }</span>
+<span class="nc" id="L188">            io.print(&quot;id: &quot;);</span>
+<span class="nc" id="L189">            int id = -1;</span>
+            try {
+<span class="nc" id="L191">                id = Integer.parseInt(io.nextLine());</span>
+<span class="nc" id="L192">            } catch (Exception e) {</span>
+<span class="nc" id="L193">                io.println(&quot;Incorrect input\n&quot;);</span>
+<span class="nc" id="L194">            }</span>
+<span class="nc" id="L195">            return id;</span>
+        }
+<span class="nc" id="L197">        return -1;</span>
+    }
+
+    /*
+     * TODO: create interface WorkDao for FakeWorkDao and PersistentWorkDao
+     */
+    private List&lt;Work&gt; findWorks(String type) {
+<span class="nc" id="L204">        io.println(&quot;Enter the &quot; + type + &quot; you want to look for (empty string returns):\n&quot;);</span>
+<span class="nc" id="L205">        List&lt;Work&gt; results = null;</span>
+<span class="nc" id="L206">        String query = io.nextLine();</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">        if (query.isEmpty()) {</span>
+<span class="nc" id="L208">            return null;</span>
+        }
+<span class="nc bnc" id="L210" title="All 2 branches missed.">        if (type.equals(&quot;tag&quot;)) {</span>
+<span class="nc" id="L211">            results = ((FakeWorkDao) dao).searchByTag(query);</span>
+        } else {
+<span class="nc" id="L213">            results = new ArrayList&lt;&gt;();</span>
+        }
+<span class="nc" id="L215">        return results;</span>
+    }
+
+    private WorkType askType(boolean editing, Work copy) {
+<span class="nc" id="L219">        WorkType type = null;</span>
+        while (true) {
+<span class="nc" id="L221">            io.print(&quot;Which category? Website/Book (W/B): &quot;);</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">            if (editing) {</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">                if (copy.getType().equals(WorkType.WEBSITE)) {</span>
+<span class="nc" id="L224">                    io.print(&quot;(W) &quot;);</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">                } else if (copy.getType().equals(WorkType.BOOK)) {</span>
+<span class="nc" id="L226">                    io.print(&quot;(B) &quot;);</span>
+                }
+            }
+<span class="nc" id="L229">            String typeString = io.nextLine();</span>
+<span class="nc bnc" id="L230" title="All 4 branches missed.">            if (editing &amp;&amp; typeString.equalsIgnoreCase(&quot;&quot;)) {</span>
+<span class="nc" id="L231">                type = copy.getType();</span>
+<span class="nc" id="L232">                break;</span>
+            }
+<span class="nc bnc" id="L234" title="All 2 branches missed.">            if (typeString.equalsIgnoreCase(&quot;W&quot;)) {</span>
+<span class="nc" id="L235">                type = WorkType.WEBSITE;</span>
+<span class="nc" id="L236">                break;</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">            } else if (typeString.equalsIgnoreCase(&quot;B&quot;)) {</span>
+<span class="nc" id="L238">                type = WorkType.BOOK;</span>
+<span class="nc" id="L239">                break;</span>
+            }
+<span class="nc" id="L241">        }</span>
+<span class="nc" id="L242">        return type;</span>
+    }
+
+    private String askAuthor(boolean editing, Work copy) {
+<span class="nc" id="L246">        io.print(&quot;Author: &quot;);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">        if (editing) {</span>
+<span class="nc" id="L248">            io.print(&quot;(&quot; + copy.getAuthor() + &quot;) &quot;);</span>
+        }
+<span class="nc" id="L250">        String author = io.nextLine();</span>
+<span class="nc bnc" id="L251" title="All 4 branches missed.">        if (editing &amp;&amp; author.equalsIgnoreCase(&quot;&quot;)) {</span>
+<span class="nc" id="L252">            author = copy.getAuthor();</span>
+        }
+<span class="nc bnc" id="L254" title="All 4 branches missed.">        if (!editing &amp;&amp; author.isEmpty()) {</span>
+<span class="nc" id="L255">            return null;</span>
+        }
+<span class="nc" id="L257">        return author;</span>
+    }
+
+    private String askTitle(boolean editing, Work copy) {
+<span class="nc" id="L261">        io.print(&quot;Title: &quot;);</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">        if (editing) {</span>
+<span class="nc" id="L263">            io.print(&quot;(&quot; + copy.getTitle() + &quot;) &quot;);</span>
+        }
+<span class="nc" id="L265">        String title = io.nextLine();</span>
+<span class="nc bnc" id="L266" title="All 4 branches missed.">        if (editing &amp;&amp; title.equalsIgnoreCase(&quot;&quot;)) {</span>
+<span class="nc" id="L267">            title = copy.getTitle();</span>
+        }
+<span class="nc bnc" id="L269" title="All 4 branches missed.">        if (!editing &amp;&amp; title.isEmpty()) {</span>
+<span class="nc" id="L270">            return null;</span>
+        }
+<span class="nc" id="L272">        return title;</span>
+    }
+
+    private String askUrl(boolean editing, Work copy) {
+<span class="nc" id="L276">        String url = &quot;&quot;;</span>
+<span class="nc" id="L277">        io.print(&quot;URL: &quot;);</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">        if (editing) {</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">            io.print(&quot;(&quot; + ((copy.getUrl() == null) ? &quot;&quot; : copy.getUrl()) + &quot;) &quot;);</span>
+        }
+<span class="nc" id="L281">        url = io.nextLine();</span>
+<span class="nc bnc" id="L282" title="All 4 branches missed.">        if (editing &amp;&amp; url.equalsIgnoreCase(&quot;&quot;)) {</span>
+<span class="nc" id="L283">            url = copy.getUrl();</span>
+        }
+<span class="nc bnc" id="L285" title="All 4 branches missed.">        if (!editing &amp;&amp; url.isEmpty()) {</span>
+<span class="nc" id="L286">            return null;</span>
+        }
+<span class="nc" id="L288">        return url;</span>
+    }
+
+    private String askTags(boolean editing, Work copy) {
+<span class="nc" id="L292">        io.print(&quot;Tags (separate by \&quot;,\&quot; , enter \&quot;-\&quot; if empty): &quot;);</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">        if (editing) {</span>
+<span class="nc" id="L294">            io.print(&quot;(&quot; + copy.getTags() + &quot;) &quot;);</span>
+        }
+<span class="nc" id="L296">        String tags = io.nextLine();</span>
+<span class="nc bnc" id="L297" title="All 4 branches missed.">        if (editing &amp;&amp; tags.equalsIgnoreCase(&quot;&quot;)) {</span>
+<span class="nc" id="L298">            tags = copy.getTags();</span>
+        }
+<span class="nc bnc" id="L300" title="All 4 branches missed.">        if (!editing &amp;&amp; tags.isEmpty()) {</span>
+<span class="nc" id="L301">            return null;</span>
+        }
+<span class="nc" id="L303">        return tags;</span>
+    }
+
+    private boolean askRead(boolean editing, Work copy) {
+<span class="nc" id="L307">        boolean read = false;</span>
+<span class="nc" id="L308">        io.print(&quot;Mark as read? (enter \&quot;Y\&quot; if read): &quot;);</span>
+<span class="nc bnc" id="L309" title="All 2 branches missed.">        if (editing) {</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">            io.print(copy.getRead() ? &quot;(Y) &quot; : &quot;(NO) &quot;);</span>
+        }
+<span class="nc" id="L312">        String input = io.nextLine();</span>
+<span class="nc bnc" id="L313" title="All 4 branches missed.">        if (editing &amp;&amp; input.equalsIgnoreCase(&quot;&quot;)) {</span>
+<span class="nc" id="L314">            read = copy.getRead();</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">        } else if (input.equalsIgnoreCase(&quot;Y&quot;)) {</span>
+<span class="nc" id="L316">            read = true;</span>
+        }
+<span class="nc" id="L318">        return read;</span>
+    }
+
+    private void createWork(boolean editing, String author, String title, String tags, WorkType type, String url, boolean read, int id) {
+<span class="nc bnc" id="L322" title="All 2 branches missed.">        if (editing) {</span>
+<span class="nc" id="L323">            Work work = new Work(author, title, tags, type);</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">            if (type.equals(WorkType.WEBSITE)) {</span>
+<span class="nc" id="L325">                work.setUrl(url);</span>
+            }
+<span class="nc" id="L327">            work.setRead(read);</span>
+<span class="nc" id="L328">            work.setId(id);</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">            if (dao.update(work) == null) {</span>
+<span class="nc" id="L330">                io.println(&quot;Unexpected error\n&quot;);</span>
+            }
+<span class="nc" id="L332">        } else {</span>
+<span class="nc bnc" id="L333" title="All 2 branches missed.">            if (type.equals(WorkType.WEBSITE)) {</span>
+<span class="nc" id="L334">                dao.create(new Work(author, title, url, tags, type));</span>
+<span class="nc bnc" id="L335" title="All 2 branches missed.">            } else if (type.equals(WorkType.BOOK)) {</span>
+<span class="nc" id="L336">                dao.create(new Work(author, title, tags, type));</span>
+            }
+        }
+<span class="nc" id="L339">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

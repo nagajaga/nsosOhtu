@@ -13,4 +13,10 @@ CircleCI: (https://circleci.com/gh/nagajaga/nsosOhtu)
 
 [![CircleCI](https://circleci.com/gh/nagajaga/nsosOhtu.svg?style=svg)](https://circleci.com/gh/nagajaga/nsosOhtu)
 
+
+[![codecov](https://codecov.io/gh/nagajaga/nsosOhtu/branch/master/graph/badge.svg)](https://codecov.io/gh/nagajaga/nsosOhtu)
+
+
 [Jacoco test report](http://htmlpreview.github.com/?https://github.com/nagajaga/nsosOhtu/blob/master/build/reports/jacoco/test/html/index.html)
+
+

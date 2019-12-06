@@ -43,7 +43,7 @@ public class FakeWorkDaoTest {
     @Test
     public void update() {
         create();
-        Work testWork = new Work("aa", "bb", "cc", "dd",WorkType.WEBSITE);
+        Work testWork = new Work("aa", "bb", "cc", 1,"dd",WorkType.WEBSITE);
         testWork.setId(1);
         dao.update(testWork);
         Work work = dao.read(1);
@@ -96,8 +96,8 @@ public class FakeWorkDaoTest {
     }
 
     private void create() {
-        dao.create(new Work("a1", "b1", "c1", "d1",WorkType.WEBSITE));
-        dao.create(new Work("a2", "b2", "c2", "d2",WorkType.WEBSITE));
-        dao.create(new Work("a3", "b3", "c3", "d3",WorkType.WEBSITE));
+        dao.create(new Work("a1", "b1", "c1", 1,"d1",WorkType.WEBSITE));
+        dao.create(new Work("a2", "b2", "c2", 1,"d2",WorkType.WEBSITE));
+        dao.create(new Work("a3", "b3", "c3", 1,"d3",WorkType.WEBSITE));
     }
 }

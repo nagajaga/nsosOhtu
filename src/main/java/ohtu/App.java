@@ -69,6 +69,10 @@ public class App {
                     break;
                 }
             }
+            int pages = 0;
+            if(type.equals(WorkType.BOOK)) {
+                pages = askPages(editing, copy);
+            }
             String tags = askTags(editing, copy);
             if (tags == null) {
                 break;
@@ -77,7 +81,7 @@ public class App {
             if (editing) {
                 read = askRead(editing, copy);
             }
-            createWork(editing, author, title, tags, type, url, read, id);
+            createWork(editing, author, title, tags, type, url, pages, read, id);
             io.println("Item saved succesfully\n");
             return;
         }
@@ -314,10 +318,16 @@ public class App {
         }
         return read;
     }
+    
+    private Integer askPages(boolean editing, Work copy) {
+        io.print("Enter total number of pages: ");
+        int pages = Integer.parseInt(io.nextLine());
+        return pages;
+    }
 
-    private void createWork(boolean editing, String author, String title, String tags, WorkType type, String url, boolean read, int id) {
+    private void createWork(boolean editing, String author, String title, String tags, WorkType type, String url, int pages, boolean read, int id) {
         if (editing) {
-            Work work = new Work(author, title, tags, type);
+            Work work = new Work(author, title, tags, pages, type);
             if (type.equals(WorkType.WEBSITE)) {
                 work.setUrl(url);
             }
@@ -328,9 +338,9 @@ public class App {
             }
         } else {
             if (type.equals(WorkType.WEBSITE)) {
-                dao.create(new Work(author, title, url, tags, type));
+                dao.create(new Work(author, title, url, pages, tags, type));
             } else if (type.equals(WorkType.BOOK)) {
-                dao.create(new Work(author, title, tags, type));
+                dao.create(new Work(author, title, tags, pages, type));
             }
         }
     }

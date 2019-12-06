@@ -8,22 +8,36 @@ public class Work {
     private String tags;
     private WorkType type;
     private boolean read;
+    private Integer pages;
+    private Integer currentPage;
     
-    public Work(String author, String title, String url, String tags, WorkType type) {
+    public Work(String author, String title, String url, int pages, String tags, WorkType type) {
         this.author = author;
         this.title = title;
         this.url = url;
         this.tags = tags;
         this.type = type;
         this.read = false;
+        this.pages = pages;
+        this.currentPage = 0;
     }
     
-    public Work(String author, String title, String tags, WorkType type) {
+    public Work(String author, String title, String tags, int pages, WorkType type) {
         this.author = author;
         this.title = title;
         this.tags = tags;
         this.type = type;
         this.read = false;
+        this.pages = pages;
+        this.currentPage = 0;
+    }
+    
+    public Integer getPages(){
+        return this.pages;
+    }
+    
+    public Integer getCurrentPage(){
+        return this.currentPage;
     }
     
     public boolean getRead() {
@@ -82,13 +96,21 @@ public class Work {
         this.type = type;
     }
     
+    public void setPages(Integer pages){
+        this.pages = pages;
+    }
+    
+    public void setCurrentPage(Integer currentPage){
+        this.currentPage = currentPage;
+    }
+    
     @Override
     public String toString() {
         if (type.equals(WorkType.WEBSITE)) {
             return "Website\n" + author + ": " + title + "\nURL: " + url + "\nTags: " + tags;
         }
         if (type.equals(WorkType.BOOK)) {
-            return "Book\n" + author + ": " + title + "\nTags: " + tags;
+            return "Book\n" + author + ": " + title + "\nPages: " + pages + "\nTags: " + tags;
         }
         return null;
     }

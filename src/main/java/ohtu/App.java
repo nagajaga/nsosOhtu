@@ -4,8 +4,8 @@ import ohtu.domain.Work;
 import java.util.List;
 import java.util.ArrayList;
 import ohtu.dao.Dao;
+import ohtu.dao.WorkDao;
 import ohtu.domain.WorkType;
-import ohtu.dao.fake.FakeWorkDao;
 import ohtu.io.IO;
 
 public class App {
@@ -197,9 +197,6 @@ public class App {
         return -1;
     }
 
-    /*
-     * TODO: create interface WorkDao for FakeWorkDao and PersistentWorkDao
-     */
     private List<Work> findWorks(String type) {
         io.println("Enter the " + type + " you want to look for (empty string returns):\n");
         List<Work> results = null;
@@ -208,7 +205,7 @@ public class App {
             return null;
         }
         if (type.equals("tag")) {
-            results = ((FakeWorkDao) dao).searchByTag(query);
+            results = ((WorkDao) dao).searchByTag(query);
         } else {
             results = new ArrayList<>();
         }

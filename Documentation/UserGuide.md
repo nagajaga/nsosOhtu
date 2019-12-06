@@ -12,5 +12,9 @@
 # How to list all bookmarks
 * Type `L` and press Enter to list all existing bookmarks.
 
+# How to search for bookmarks
+
+# How to edit bookmarks
+
 # How to exit the program
 * Type `E` and press Enter to exit the program.

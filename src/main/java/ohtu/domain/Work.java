@@ -32,7 +32,7 @@ public class Work {
         this.currentPage = 0;
     }
     
-    public Integer getPages(){
+    public Integer getPages() {
         return this.pages;
     }
     

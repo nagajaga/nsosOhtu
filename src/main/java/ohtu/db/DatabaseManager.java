@@ -1,4 +1,5 @@
 package ohtu.db;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -45,11 +46,17 @@ public class DatabaseManager {
      */
     public void createTablesIfAbsent() throws SQLException {
         Connection conn = openConnection();
-        conn.prepareStatement("create table if not exists Person(id integer primary key auto_increment,"
-                + " name varchar(" + charLimit + "));").executeUpdate();
-        conn.prepareStatement("create table if not exists Record(id integer primary key auto_increment,"
-                + " personId integer, score integer, difficulty integer,"
-                + " foreign key (personId) references Person(id));").executeUpdate();
+        conn.prepareStatement("create table if not exists Work ("
+                + "  id INTEGER PRIMARY KEY,"
+                + "  author VARCHAR(128),"
+                + "  title VARCHAR(128),"
+                + "  code VARCHAR(128),"
+                + "  tags VARCHAR(256),"
+                + "  type VARCHAR(128),"
+                + "  read BOOLEAN,"
+                + "  pages INTEGER,"
+                + "  current_page INTEGER"
+                + ");").executeUpdate();
         conn.close();
     }
 

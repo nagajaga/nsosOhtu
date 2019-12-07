@@ -93,22 +93,22 @@ public class App {
         if (list.isEmpty()) {
             io.println("No works yet\n");
         } else {
-            io.print("All/Read/Unread (A/R/U): ");
+            io.print("[All]/Read/Unread/Cancel ([A]/R/U/C): ");
             String subList = io.nextLine();
             WorkType type = WorkType.NULL;
             boolean anyType = false;
-            io.print("Which category? Any/Website/Book (A/W/B): ");
+            io.print("Which category? [Any]/Website/Book/Cancel ([A]/W/B/C): ");
             String typeString = io.nextLine();
             if (typeString.equalsIgnoreCase("W")) {
                 type = WorkType.WEBSITE;
             } else if (typeString.equalsIgnoreCase("B")) {
                 type = WorkType.BOOK;
-            } else if (typeString.equalsIgnoreCase("A")) {
+            } else if (typeString.equalsIgnoreCase("A") || typeString.isEmpty()) {
                 anyType = true;
-            } else {
+            } else if (typeString.equalsIgnoreCase("C")) {
                 return;
             }
-            if (subList.equalsIgnoreCase("A")) {
+            if (subList.equalsIgnoreCase("A") || subList.isEmpty()) {
                 io.println("\nAll works:\n");
                 for (Work work : list) {
                     if (anyType) {
@@ -139,6 +139,8 @@ public class App {
                         }
                     }
                 }
+            } else if (subList.equalsIgnoreCase("C")) {
+                return;
             }
         }
     }

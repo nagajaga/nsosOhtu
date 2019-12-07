@@ -1,14 +1,20 @@
 /*
  * @author londes
  */
-
 package ohtu.dao.impl;
 
 import java.util.List;
 import ohtu.domain.Work;
 import ohtu.dao.WorkDao;
+import ohtu.db.DatabaseManager;
 
 public class WorkDaoImpl implements WorkDao {
+
+    private DatabaseManager db;
+
+    public WorkDaoImpl(DatabaseManager db) {
+        this.db = db;
+    }
 
     @Override
     public Work create(Work work) {

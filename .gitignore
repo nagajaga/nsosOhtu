@@ -20,3 +20,4 @@
 .directory
 .syntastic*
 /bin/
+/resources/

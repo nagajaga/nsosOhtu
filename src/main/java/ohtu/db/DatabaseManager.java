@@ -5,25 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * A singleton class for handling database settings.
+ * A class for handling database settings.
  */
 public class DatabaseManager {
 
-    private static DatabaseManager instance;
     private String path;
     private String username;
     private String password;
-    private int charLimit;
 
-    private DatabaseManager() {
-        charLimit = 10;
-    }
-
-    public static DatabaseManager getInstance() {
-        if (instance == null) {
-            instance = new DatabaseManager();
-        }
-        return instance;
+    public DatabaseManager() {
     }
 
     /**
@@ -58,10 +48,6 @@ public class DatabaseManager {
                 + "  current_page INTEGER"
                 + ");").executeUpdate();
         conn.close();
-    }
-
-    public int getCharLimit() {
-        return charLimit;
     }
 
     /**

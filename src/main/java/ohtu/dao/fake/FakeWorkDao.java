@@ -35,7 +35,7 @@ public class FakeWorkDao implements WorkDao {
      */
     @Override
     public Work create(Work work) {
-        Work stored = new Work(work.getAuthor(), work.getTitle(), work.getUrl(), work.getPages(), work.getTags(), work.getType());
+        Work stored = new Work(work.getAuthor(), work.getTitle(), work.getCode(), work.getPages(), work.getTags(), work.getType());
         Integer id = 0;
         if (!works.isEmpty()) {
             id = works.get(works.size() - 1).getId() + 1;
@@ -50,7 +50,7 @@ public class FakeWorkDao implements WorkDao {
     public Work read(Integer key) {
         Work stored = get(key);
         if (stored != null) {
-            Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getPages(), stored.getTags(), stored.getType());
+            Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getCode(), stored.getPages(), stored.getTags(), stored.getType());
             copy.setId(stored.getId());
             copy.setRead(stored.getRead());
             return copy;
@@ -70,11 +70,11 @@ public class FakeWorkDao implements WorkDao {
             toUpdate.setAuthor(work.getAuthor());
             toUpdate.setTitle(work.getTitle());
             toUpdate.setTags(work.getTags());
-            toUpdate.setUrl(work.getUrl());
+            toUpdate.setUrl(work.getCode());
             toUpdate.setRead(work.getRead());
             toUpdate.setType(work.getType());
             toUpdate.setPages(work.getPages());
-            Work copy = new Work(toUpdate.getAuthor(), toUpdate.getTitle(), toUpdate.getUrl(), toUpdate.getPages(), toUpdate.getTags(), toUpdate.getType());
+            Work copy = new Work(toUpdate.getAuthor(), toUpdate.getTitle(), toUpdate.getCode(), toUpdate.getPages(), toUpdate.getTags(), toUpdate.getType());
             return copy;
         }
         return null;
@@ -94,7 +94,7 @@ public class FakeWorkDao implements WorkDao {
     public List<Work> list() {
         List<Work> ret = new ArrayList<>();
         for (Work stored : works) {
-            Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getPages(), stored.getTags(), stored.getType());
+            Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getCode(), stored.getPages(), stored.getTags(), stored.getType());
             copy.setId(stored.getId());
             copy.setRead(stored.getRead());
             copy.setType(stored.getType());
@@ -116,7 +116,7 @@ public class FakeWorkDao implements WorkDao {
         List<Work> results = new ArrayList<>();
         for (Work stored : works) {
             if (containsSubstrings(tags, stored.getTags())) {
-                Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getUrl(), stored.getPages(), stored.getTags(), stored.getType());
+                Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getCode(), stored.getPages(), stored.getTags(), stored.getType());
                 copy.setId(stored.getId());
                 results.add(copy);
             }

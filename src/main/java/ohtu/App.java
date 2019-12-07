@@ -279,11 +279,11 @@ public class App {
         String url = "";
         io.print("URL: ");
         if (editing) {
-            io.print("(" + ((copy.getUrl() == null) ? "" : copy.getUrl()) + ") ");
+            io.print("(" + ((copy.getCode() == null) ? "" : copy.getCode()) + ") ");
         }
         url = io.nextLine();
         if (editing && url.equalsIgnoreCase("")) {
-            url = copy.getUrl();
+            url = copy.getCode();
         }
         if (!editing && url.isEmpty()) {
             return null;

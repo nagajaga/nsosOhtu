@@ -52,7 +52,7 @@ public class Work {
         return id;
     }
     
-    public String getUrl(){
+    public String getCode(){
         return this.url;
     }
     

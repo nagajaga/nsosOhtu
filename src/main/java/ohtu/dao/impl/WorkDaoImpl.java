@@ -1,6 +1,3 @@
-/*
- * @author londes
- */
 package ohtu.dao.impl;
 
 import java.sql.Connection;
@@ -58,7 +55,7 @@ public class WorkDaoImpl implements WorkDao {
         s.setString(5, work.getType().toString());
         s.setBoolean(6, work.getRead());
         s.setInt(7, work.getPages());
-        s.setInt(7, work.getCurrentPage());
+        s.setInt(8, work.getCurrentPage());
         return s;
     }
 

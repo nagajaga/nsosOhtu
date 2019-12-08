@@ -3,6 +3,7 @@ package ohtu;
 import ohtu.domain.Work;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 import ohtu.dao.Dao;
 import ohtu.dao.WorkDao;
 import ohtu.domain.WorkType;
@@ -71,7 +72,12 @@ public class App {
             }
             int pages = 0;
             if(type.equals(WorkType.BOOK)) {
-                pages = askPages(editing, copy);
+                while (true) {
+                    pages = askPages(editing, copy);
+                    if (pages > 0) {
+                        break;
+                    }
+                }
             }
             String tags = askTags(editing, copy);
             if (tags == null) {
@@ -322,8 +328,18 @@ public class App {
     }
     
     private Integer askPages(boolean editing, Work copy) {
+        int pages = 0;
         io.print("Enter total number of pages: ");
-        int pages = Integer.parseInt(io.nextLine());
+        if (editing) {
+            io.print("(" + copy.getPages() + ") ");
+        }
+        String input = io.nextLine();
+        Pattern pattern = Pattern.compile("\\d+");
+        if (editing && input.equalsIgnoreCase("")) {
+            pages = copy.getPages();
+        } else if (pattern.matcher(input).matches()) {
+            pages = Integer.parseInt(input);
+        }
         return pages;
     }
 

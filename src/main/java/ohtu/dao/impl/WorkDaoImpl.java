@@ -74,13 +74,11 @@ public class WorkDaoImpl implements WorkDao {
             stmt = connection.prepareStatement("DELETE FROM Work WHERE id = ?");
 
             stmt.setInt(1, key);
-            ResultSet rs = stmt.executeQuery();
-            if (!rs.next()) {
+            if (stmt.executeUpdate() == 0) {
                 return false;
             }
 
             stmt.close();
-            rs.close();
             connection.close();
             list();
         } catch (SQLException ex) {

@@ -186,7 +186,7 @@ public class WorkDaoImpl implements WorkDao {
                 + "type = ? , "
                 + "read = ? , "
                 + "pages = ? , "
-                + "current_page = ? , "
+                + "current_page = ? "
                 + "WHERE id = ?";
 
         try (Connection conn = db.openConnection();
@@ -203,6 +203,9 @@ public class WorkDaoImpl implements WorkDao {
             stmt.setInt(9, work.getId());
 
             stmt.executeUpdate();
+            conn.close();
+            stmt.close();
+            list();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

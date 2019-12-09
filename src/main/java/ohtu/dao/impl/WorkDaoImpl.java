@@ -205,6 +205,7 @@ public class WorkDaoImpl implements WorkDao {
             stmt.executeUpdate();
             conn.close();
             stmt.close();
+            list();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

@@ -149,7 +149,7 @@ public class WorkDaoImpl implements WorkDao {
             work = new Work(rs.getString("author"),
                     rs.getString("title"), rs.getString("code"), rs.getInt("pages"),
                     rs.getString("tags"),
-                    rs.getString("type").equalsIgnoreCase("w") ? WorkType.WEBSITE : WorkType.BOOK
+                    rs.getString("type").equalsIgnoreCase("WEBSITE") ? WorkType.WEBSITE : WorkType.BOOK
             );
 
             work.setId(rs.getInt("id"));
@@ -186,7 +186,7 @@ public class WorkDaoImpl implements WorkDao {
                 + "type = ? , "
                 + "read = ? , "
                 + "pages = ? , "
-                + "current_page = ? , "
+                + "current_page = ? "
                 + "WHERE id = ?";
 
         try (Connection conn = db.openConnection();
@@ -203,6 +203,8 @@ public class WorkDaoImpl implements WorkDao {
             stmt.setInt(9, work.getId());
 
             stmt.executeUpdate();
+            conn.close();
+            stmt.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

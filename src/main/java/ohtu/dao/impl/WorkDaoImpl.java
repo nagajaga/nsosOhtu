@@ -154,7 +154,34 @@ public class WorkDaoImpl implements WorkDao {
 
     @Override
     public Work update(Work work) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String sql = "UPDATE Work SET author = ? , "
+                + "title = ? , "
+                + "code = ? , "
+                + "tags = ? , "
+                + "type = ? , "
+                + "read = ? , "
+                + "pages = ? , "
+                + "current_page = ? , "
+                + "WHERE id = ?";
+
+        try (Connection conn = db.openConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, work.getAuthor());
+            stmt.setString(2, work.getTitle());
+            stmt.setString(3, work.getCode());
+            stmt.setString(4, work.getTags());
+            stmt.setString(5, work.getType().toString());
+            stmt.setBoolean(6, work.getRead());
+            stmt.setInt(7, work.getPages());
+            stmt.setInt(8, work.getCurrentPage());
+            stmt.setInt(9, work.getId());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return work;
     }
 
     private void setWorkId(ResultSet keys, Work work) throws SQLException {

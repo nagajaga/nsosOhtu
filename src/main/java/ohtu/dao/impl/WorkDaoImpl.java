@@ -21,6 +21,8 @@ public class WorkDaoImpl implements WorkDao {
 
     public WorkDaoImpl(DatabaseManager db) {
         this.db = db;
+        works = new ArrayList<>();
+        list();
     }
 
     @Override

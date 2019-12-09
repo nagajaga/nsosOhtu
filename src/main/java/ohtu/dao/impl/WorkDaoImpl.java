@@ -149,7 +149,7 @@ public class WorkDaoImpl implements WorkDao {
             work = new Work(rs.getString("author"),
                     rs.getString("title"), rs.getString("code"), rs.getInt("pages"),
                     rs.getString("tags"),
-                    rs.getString("type").equalsIgnoreCase("w") ? WorkType.WEBSITE : WorkType.BOOK
+                    mapType(rs.getString("type"))
             );
 
             work.setId(rs.getInt("id"));

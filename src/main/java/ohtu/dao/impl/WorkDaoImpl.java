@@ -68,7 +68,24 @@ public class WorkDaoImpl implements WorkDao {
 
     @Override
     public boolean delete(Integer key) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        PreparedStatement stmt;
+        try {
+            Connection connection = db.openConnection();
+            stmt = connection.prepareStatement("DELETE FROM Work WHERE id = ?");
+
+            stmt.setInt(1, key);
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                return false;
+            }
+
+            stmt.close();
+            rs.close();
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(WorkDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
     }
 
     @Override

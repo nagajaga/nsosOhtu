@@ -40,7 +40,7 @@ public class App {
                 handleDeleting();
             }
         }
-        io.println("\nGoodbye!");
+        io.println("\nFarewell! Hope to see you soon.");
     }
 
     private void handleAdding(int id, boolean editing) {

@@ -29,7 +29,7 @@ public class WorkDaoImpl implements WorkDao {
             ResultSet keys = s.getGeneratedKeys();
             setWorkId(keys, work);
             return work;
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(WorkDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return work;

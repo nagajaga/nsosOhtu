@@ -1,17 +1,20 @@
 package main;
 
 import ohtu.dao.fake.FakeWorkDao;
-import ohtu.dao.impl.WorkDaoImpl;
 import ohtu.io.ConsoleIO;
-//import ohtu.db.DatabaseManager;
 
 public class Main {
 
     public static void main(String[] args) {
+//        try {
+//            DatabaseManager dbm = new DatabaseManager();
+//            dbm.setup("jdbc:sqlite:resources/app.db", "nsos", "snek");
+//            dbm.createTablesIfAbsent();
+//            new ohtu.App(new ConsoleIO(), new WorkDaoImpl(dbm)).run();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         new ohtu.App(new ConsoleIO(), new FakeWorkDao()).run();
-        /*DatabaseManager dbm = new DatabaseManager();
-        dbm.setup("jdbc:h2:works.db", "nsos", "snek");
-        new ohtu.App(new ConsoleIO(), new WorkDaoImpl(dbm)).run();*/
     }
 
 }

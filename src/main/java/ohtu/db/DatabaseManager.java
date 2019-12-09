@@ -33,9 +33,8 @@ public class DatabaseManager {
      * Sets up the database.
      *
      * @throws SQLException
-     * @throws java.lang.ClassNotFoundException
      */
-    public void createTablesIfAbsent() throws SQLException, ClassNotFoundException {
+    public void createTablesIfAbsent() throws SQLException {
         Connection conn = openConnection();
         conn.prepareStatement("create table if not exists Work ("
                 + "  id INTEGER PRIMARY KEY,"
@@ -57,8 +56,7 @@ public class DatabaseManager {
      * @return
      * @throws SQLException
      */
-    public Connection openConnection() throws SQLException, ClassNotFoundException {
-        Class.forName ("org.h2.Driver");
+    public Connection openConnection() throws SQLException {
         Connection conn = DriverManager.getConnection(path, username, password);
         return conn;
     }

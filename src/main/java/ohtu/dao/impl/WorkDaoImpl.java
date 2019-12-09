@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ohtu.domain.Work;
@@ -34,6 +33,7 @@ public class WorkDaoImpl implements WorkDao {
             s.executeUpdate();
             ResultSet keys = s.getGeneratedKeys();
             setWorkId(keys, work);
+            list();
             return work;
         } catch (SQLException ex) {
             Logger.getLogger(WorkDaoImpl.class.getName()).log(Level.SEVERE, null, ex);

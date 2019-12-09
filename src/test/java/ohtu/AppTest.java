@@ -83,7 +83,7 @@ public class AppTest {
     
     @Test
     public void listingUnreadWorks() {
-        io = new StubIO("a", "w", "testAuthor", "testTitle", "testUrl", "testTag", "l", "u", "a", "q");
+        io = new StubIO("a", "w", "testAuthor", "testTitle", "testUrl", "testTag", "l", "u", "w", "q");
         new App(io, dao).run();
         assertEquals("[All]/Read/Unread/Cancel ([A]/R/U/C): ", io.outputs.get(9));
         assertEquals("Which category? [Any]/Website/Book/Cancel ([A]/W/B/C): ", io.outputs.get(10));
@@ -92,10 +92,20 @@ public class AppTest {
     }
     
     @Test
+    public void listingReadBookWorks() {
+        io = new StubIO("a", "b", "testAuthor", "testTitle", "200", "testTag", "e","0","b","newAuthor","newTitle","250","newTag","y","l","a","b","l","r","b","q");
+        new App(io, dao).run();
+        assertEquals("\nRead works:\n", io.outputs.get(34));
+        assertEquals("Book\nnewAuthor: newTitle\nPages: 250\nTags: newTag\n", io.outputs.get(35));
+    }
+    
+    
+    @Test
     public void searchingWorks() {
         io = new StubIO("a", "b", "testAuthor", "testTitle", "200", "testTag", "s", "testTag", "q");
         new App(io, dao).run();
         assertEquals("Enter the tag you want to look for (empty string returns):\n", io.outputs.get(9));
-        
     }
+    
+    
 }

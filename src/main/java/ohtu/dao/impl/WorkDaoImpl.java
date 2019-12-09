@@ -37,7 +37,6 @@ public class WorkDaoImpl implements WorkDao {
 
     private PreparedStatement prepareStatement(Connection conn, Work work) throws SQLException {
         PreparedStatement s = conn.prepareStatement("insert into Work ("
-                + " id,"
                 + " author,"
                 + " title,"
                 + " code,"
@@ -46,7 +45,7 @@ public class WorkDaoImpl implements WorkDao {
                 + " read,"
                 + " pages,"
                 + " current_page"
-                + ") values (default, ?, ?, ?, ?, ?, ?, ?);",
+                + ") values (?, ?, ?, ?, ?, ?, ?, ?);",
                 Statement.RETURN_GENERATED_KEYS);
         s.setString(1, work.getAuthor());
         s.setString(2, work.getTitle());

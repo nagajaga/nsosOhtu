@@ -82,6 +82,7 @@ public class WorkDaoImpl implements WorkDao {
             stmt.close();
             rs.close();
             connection.close();
+            list();
         } catch (SQLException ex) {
             Logger.getLogger(WorkDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

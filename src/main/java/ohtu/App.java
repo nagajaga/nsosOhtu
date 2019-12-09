@@ -71,7 +71,7 @@ public class App {
                 }
             }
             int pages = 0;
-            if(type.equals(WorkType.BOOK)) {
+            if (type.equals(WorkType.BOOK)) {
                 while (true) {
                     pages = askPages(editing, copy);
                     if (pages > 0) {
@@ -103,6 +103,10 @@ public class App {
             String subList = io.nextLine();
             WorkType type = WorkType.NULL;
             boolean anyType = false;
+            if (!subList.equalsIgnoreCase("A") && !subList.equalsIgnoreCase("R")
+                    && !subList.equalsIgnoreCase("U") && !subList.equalsIgnoreCase("")) {
+                return;
+            }
             io.print("Which category? [Any]/Website/Book/Cancel ([A]/W/B/C): ");
             String typeString = io.nextLine();
             if (typeString.equalsIgnoreCase("W")) {
@@ -111,7 +115,7 @@ public class App {
                 type = WorkType.BOOK;
             } else if (typeString.equalsIgnoreCase("A") || typeString.isEmpty()) {
                 anyType = true;
-            } else if (typeString.equalsIgnoreCase("C")) {
+            } else if (!typeString.isEmpty()) {
                 return;
             }
             if (subList.equalsIgnoreCase("A") || subList.isEmpty()) {
@@ -326,7 +330,7 @@ public class App {
         }
         return read;
     }
-    
+
     private Integer askPages(boolean editing, Work copy) {
         int pages = 0;
         io.print("Enter total number of pages: ");

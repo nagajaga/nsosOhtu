@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ohtu.domain.Work;
@@ -17,11 +19,11 @@ import ohtu.domain.WorkType;
 public class WorkDaoImpl implements WorkDao {
 
     private DatabaseManager db;
-    private ArrayList<Work> works;
+    private Map<Integer, Work> works;
 
     public WorkDaoImpl(DatabaseManager db) {
         this.db = db;
-        works = new ArrayList<>();
+        works = new HashMap<>();
         list();
     }
 
@@ -94,9 +96,15 @@ public class WorkDaoImpl implements WorkDao {
         } catch (SQLException e) {
             System.err.println("Database exception: " + e.getMessage());
         }
-        works.clear();
-        works.addAll(ret);
+        populateMap(ret);
         return ret;
+    }
+
+    private void populateMap(List<Work> list) {
+        works.clear();
+        for (Work work : list) {
+            works.put(work.getId(), work);
+        }
     }
 
     private WorkType mapType(String str) {
@@ -134,6 +142,7 @@ public class WorkDaoImpl implements WorkDao {
 
             stmt.close();
             rs.close();
+            works.put(work.getId(), work);
             connection.close();
         } catch (SQLException ex) {
             Logger.getLogger(WorkDaoImpl.class.getName()).log(Level.SEVERE, null, ex);

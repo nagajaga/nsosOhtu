@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ohtu.domain.Work;
 import ohtu.dao.WorkDao;
 import ohtu.db.DatabaseManager;
+import ohtu.domain.WorkType;
 
 public class WorkDaoImpl implements WorkDao {
 
@@ -70,7 +72,36 @@ public class WorkDaoImpl implements WorkDao {
 
     @Override
     public Work read(Integer key) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Work work = null;
+        PreparedStatement stmt;
+        try {
+            Connection connection = db.openConnection();
+            stmt = connection.prepareStatement("SELECT * FROM Work WHERE id = ?");
+
+            stmt.setInt(1, key);
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+
+            work = new Work(rs.getString("author"),
+                    rs.getString("title"), rs.getString("code"), rs.getInt("pages"),
+                    rs.getString("tags"),
+                    rs.getString("type").equalsIgnoreCase("w") ? WorkType.WEBSITE : WorkType.BOOK
+            );
+
+            work.setId(rs.getInt("id"));
+            work.setCurrentPage(rs.getInt("current_page"));
+            work.setRead(rs.getBoolean("read"));
+
+            stmt.close();
+            rs.close();
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(WorkDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return work;
     }
 
     @Override

@@ -11,4 +11,4 @@
 .syntastic*
 /bin/
 /resources/
-.app.db
+/app.db

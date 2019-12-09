@@ -19,7 +19,7 @@ public class Main {
         } catch (SQLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        new ohtu.App(new ConsoleIO(), new FakeWorkDao()).run();
+        //new ohtu.App(new ConsoleIO(), new FakeWorkDao()).run();
     }
 
 }

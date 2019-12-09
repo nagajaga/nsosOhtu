@@ -1,6 +1,7 @@
 package ohtu.domain;
 
 public class Work {
+
     private Integer id;
     private String author;
     private String title;
@@ -10,7 +11,19 @@ public class Work {
     private boolean read;
     private Integer pages;
     private Integer currentPage;
-    
+
+    public Work(Integer id, String author, String title, String url, String tags, WorkType type, boolean read, Integer pages, Integer currentPage) {
+        this.id = id;
+        this.author = author;
+        this.title = title;
+        this.url = url;
+        this.tags = tags;
+        this.type = type;
+        this.read = read;
+        this.pages = pages;
+        this.currentPage = currentPage;
+    }
+
     public Work(String author, String title, String url, int pages, String tags, WorkType type) {
         this.author = author;
         this.title = title;
@@ -21,7 +34,7 @@ public class Work {
         this.pages = pages;
         this.currentPage = 0;
     }
-    
+
     public Work(String author, String title, String tags, int pages, WorkType type) {
         this.author = author;
         this.title = title;
@@ -31,15 +44,15 @@ public class Work {
         this.pages = pages;
         this.currentPage = 0;
     }
-    
+
     public Integer getPages() {
         return this.pages;
     }
-    
-    public Integer getCurrentPage(){
+
+    public Integer getCurrentPage() {
         return this.currentPage;
     }
-    
+
     public boolean getRead() {
         return this.read;
     }
@@ -47,25 +60,24 @@ public class Work {
     public WorkType getType() {
         return type;
     }
-    
+
     public Integer getId() {
         return id;
     }
-    
-    public String getCode(){
+
+    public String getCode() {
         return this.url;
     }
-    
 
-    public String getAuthor(){
+    public String getAuthor() {
         return this.author;
     }
-    
-    public String getTags(){
+
+    public String getTags() {
         return this.tags;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return this.title;
     }
 
@@ -80,14 +92,15 @@ public class Work {
     public void setTitle(String title) {
         this.title = title;
     }
-    
+
     public void setUrl(String url) {
         this.url = url;
     }
-    
+
     public void setTags(String tags) {
         this.tags = tags;
     }
+
     public void setRead(boolean read) {
         this.read = read;
     }
@@ -95,15 +108,15 @@ public class Work {
     public void setType(WorkType type) {
         this.type = type;
     }
-    
-    public void setPages(Integer pages){
+
+    public void setPages(Integer pages) {
         this.pages = pages;
     }
-    
-    public void setCurrentPage(Integer currentPage){
+
+    public void setCurrentPage(Integer currentPage) {
         this.currentPage = currentPage;
     }
-    
+
     @Override
     public String toString() {
         if (type.equals(WorkType.WEBSITE)) {

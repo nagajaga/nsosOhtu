@@ -5,25 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import ohtu.domain.Work;
-import ohtu.dao.Dao;
 
 /**
- * A non-persistent placeholder for WorkDao Implemented as a singleton
+ * A non-persistent placeholder for WorkDa
  */
 public class FakeWorkDao implements WorkDao {
 
-    private static FakeWorkDao INSTANCE;
     private ArrayList<Work> works;
 
     public FakeWorkDao() {
         works = new ArrayList<>();
-    }
-
-    public static FakeWorkDao getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new FakeWorkDao();
-        }
-        return INSTANCE;
     }
 
     /**

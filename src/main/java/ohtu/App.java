@@ -42,7 +42,7 @@ public class App {
                 handleUpdatingCurrentPage();
             }
         }
-        io.println("\nGoodbye!");
+        io.println("\nFarewell! Hope to see you soon.");
     }
 
     private void handleAdding(int id, boolean editing) {

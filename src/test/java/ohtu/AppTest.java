@@ -23,7 +23,7 @@ public class AppTest {
         io = new StubIO("q");
         new App(io, dao).run();
         assertEquals("Hello!", io.outputs.get(0));
-        assertEquals("Add/List/Search/Edit/Delete/Quit (A/L/S/E/D/Q): ", io.outputs.get(1));
+        assertEquals("Add / List / Search / Update current page / Edit / Delete / Quit (A/L/S/U/E/D/Q): ", io.outputs.get(1));
         assertEquals("\nGoodbye!", io.outputs.get(2));
     }
 
@@ -40,7 +40,7 @@ public class AppTest {
     public void addingWebsiteWorks() {
         io = new StubIO("a", "w", "testAuthor", "testTitle", "testUrl", "testTag", "q");
         new App(io, dao).run();
-        assertEquals("Add/List/Search/Edit/Delete/Quit (A/L/S/E/D/Q): ", io.outputs.get(1));
+        assertEquals("Add / List / Search / Update current page / Edit / Delete / Quit (A/L/S/U/E/D/Q): ", io.outputs.get(1));
         assertEquals("Which category? Website/Book (W/B): ", io.outputs.get(2));
         assertEquals("Author: ", io.outputs.get(3));
         assertEquals("Title: ", io.outputs.get(4));
@@ -54,7 +54,7 @@ public class AppTest {
     public void addingBookWorks() {
         io = new StubIO("a", "b", "testAuthor", "testTitle", "200", "testTag", "q");
         new App(io, dao).run();
-        assertEquals("Add/List/Search/Edit/Delete/Quit (A/L/S/E/D/Q): ", io.outputs.get(1));
+        assertEquals("Add / List / Search / Update current page / Edit / Delete / Quit (A/L/S/U/E/D/Q): ", io.outputs.get(1));
         assertEquals("Which category? Website/Book (W/B): ", io.outputs.get(2));
         assertEquals("Author: ", io.outputs.get(3));
         assertEquals("Title: ", io.outputs.get(4));
@@ -78,7 +78,7 @@ public class AppTest {
         io = new StubIO("a", "b", "testAuthor", "testTitle", "200", "testTag", "e","0","b","newAuthor","newTitle","250","newTag","y","l","a","b","q");
         new App(io, dao).run();
         assertEquals("\nEnter the id of the item you want to edit:\n", io.outputs.get(9));
-        assertEquals("Book\nnewAuthor: newTitle\nPages: 250\nTags: newTag\n", io.outputs.get(30));
+        assertEquals("Book\nnewAuthor: newTitle\nPages: 250\nCurrent page: 1\nTags: newTag\n", io.outputs.get(30));
     }
     
     @Test
@@ -96,7 +96,7 @@ public class AppTest {
         io = new StubIO("a", "b", "testAuthor", "testTitle", "200", "testTag", "e","0","b","newAuthor","newTitle","250","newTag","y","l","a","b","l","r","b","q");
         new App(io, dao).run();
         assertEquals("\nRead works:\n", io.outputs.get(34));
-        assertEquals("Book\nnewAuthor: newTitle\nPages: 250\nTags: newTag\n", io.outputs.get(35));
+        assertEquals("Book\nnewAuthor: newTitle\nPages: 250\nCurrent page: 1\nTags: newTag\n", io.outputs.get(35));
     }
     
     

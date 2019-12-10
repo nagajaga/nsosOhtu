@@ -107,5 +107,21 @@ public class AppTest {
         assertEquals("Enter the tag you want to look for (empty string returns):\n", io.outputs.get(9));
     }
     
+    @Test
+    public void updatingCurrentPageWorks(){
+        io = new StubIO("a","b","testAuthor","testTitle","200","testTag","u","0","90","q");
+        new App(io, dao).run();
+        assertEquals("\nEnter the id of the item you want to update the current page for:\n", io.outputs.get(9));
+        assertEquals("Last time you were on page 1/200. Leaving the field empty cancels. Enter a new page number: ", io.outputs.get(12));
+        
+    }
+    
+    @Test
+    public void updatingCurrentPageWithInvalidNumberWorks(){
+        io = new StubIO("a","b","testAuthor","testTitle","200","testTag","u","0","-1","q");
+        new App(io, dao).run();
+        assertEquals("Failed updating the current page\n", io.outputs.get(13));
+    }
+    
     
 }

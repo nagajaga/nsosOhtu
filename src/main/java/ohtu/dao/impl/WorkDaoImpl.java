@@ -169,12 +169,37 @@ public class WorkDaoImpl implements WorkDao {
 
     @Override
     public List<Work> searchByTag(String tag) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<String> list = new ArrayList<String>();
+        list.add(tag);
+        List<Work> results = searchByTag(list);
+        return results;
     }
 
     @Override
     public List<Work> searchByTag(List<String> tags) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<Work> results = new ArrayList<>();
+        for (Work stored : works.values()) {
+            if (containsSubstrings(tags, stored.getTags())) {
+                Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getCode(), stored.getPages(), stored.getTags(), stored.getType());
+                copy.setId(stored.getId());
+                results.add(copy);
+            }
+        }
+        return results;
+    }
+
+    /**
+     * A logical AND substring search
+     * @param needles the list of substrings to look for
+     * @param haystack the string to search
+     */
+    private boolean containsSubstrings(List<String> needles, String haystack) {
+        for (String needle : needles) {
+            if (!haystack.contains(needle)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

@@ -1,8 +1,6 @@
-/*
- * @author londes
- */
 package ohtu.commands;
 
+import java.util.List;
 import ohtu.dao.Dao;
 import ohtu.domain.Work;
 import ohtu.domain.WorkType;
@@ -16,7 +14,7 @@ public class ListWorks extends Command {
 
     @Override
     public void run() {
-        java.util.List<Work> list = dao.list();
+        List<Work> list = dao.list();
         if (list.isEmpty()) {
             io.println("No works yet\n");
         } else {
@@ -24,6 +22,10 @@ public class ListWorks extends Command {
             String subList = io.nextLine();
             WorkType type = WorkType.NULL;
             boolean anyType = false;
+            if (!subList.equalsIgnoreCase("A") && !subList.equalsIgnoreCase("R")
+                    && !subList.equalsIgnoreCase("U") && !subList.equalsIgnoreCase("")) {
+                return;
+            }
             io.print("Which category? [Any]/Website/Book/Cancel ([A]/W/B/C): ");
             String typeString = io.nextLine();
             if (typeString.equalsIgnoreCase("W")) {
@@ -32,13 +34,15 @@ public class ListWorks extends Command {
                 type = WorkType.BOOK;
             } else if (typeString.equalsIgnoreCase("A") || typeString.isEmpty()) {
                 anyType = true;
-            } else if (typeString.equalsIgnoreCase("C")) {
+            } else if (!typeString.isEmpty()) {
                 return;
             }
             if (subList.equalsIgnoreCase("A") || subList.isEmpty()) {
                 io.println("\nAll works:\n");
                 for (Work work : list) {
-                    if (anyType || work.getType() == type) {
+                    if (anyType) {
+                        io.println(work + "\n");
+                    } else if (work.getType() == type) {
                         io.println(work + "\n");
                     }
                 }
@@ -46,7 +50,9 @@ public class ListWorks extends Command {
                 io.println("\nRead works:\n");
                 for (Work work : list) {
                     if (work.getRead()) {
-                        if (anyType || work.getType() == type) {
+                        if (anyType) {
+                            io.println(work + "\n");
+                        } else if (work.getType() == type) {
                             io.println(work + "\n");
                         }
                     }
@@ -55,7 +61,9 @@ public class ListWorks extends Command {
                 io.println("\nUnread works:\n");
                 for (Work work : list) {
                     if (!work.getRead()) {
-                        if (anyType || work.getType() == type) {
+                        if (anyType) {
+                            io.println(work + "\n");
+                        } else if (work.getType() == type) {
                             io.println(work + "\n");
                         }
                     }
@@ -65,5 +73,4 @@ public class ListWorks extends Command {
             }
         }
     }
-
 }

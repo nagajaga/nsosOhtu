@@ -1,6 +1,3 @@
-/*
- * @author londes
- */
 package ohtu.commands;
 
 import ohtu.dao.Dao;
@@ -67,5 +64,4 @@ public class Add extends Command {
         }
         io.println("Field must not be blank\n");
     }
-
 }

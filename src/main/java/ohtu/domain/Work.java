@@ -32,7 +32,7 @@ public class Work {
         this.type = type;
         this.read = false;
         this.pages = pages;
-        this.currentPage = 0;
+        this.currentPage = 1;
     }
 
     public Work(String author, String title, String tags, int pages, WorkType type) {
@@ -42,7 +42,7 @@ public class Work {
         this.type = type;
         this.read = false;
         this.pages = pages;
-        this.currentPage = 0;
+        this.currentPage = 1;
     }
 
     public Integer getPages() {
@@ -123,7 +123,7 @@ public class Work {
             return "Website\n" + author + ": " + title + "\nURL: " + url + "\nTags: " + tags;
         }
         if (type.equals(WorkType.BOOK)) {
-            return "Book\n" + author + ": " + title + "\nPages: " + pages + "\nTags: " + tags;
+            return "Book\n" + author + ": " + title + "\nPages: " + pages + "\nCurrent page: " + currentPage + "\nTags: " + tags;
         }
         return null;
     }

@@ -10,6 +10,7 @@ import ohtu.commands.Delete;
 import ohtu.commands.Edit;
 import ohtu.commands.ListWorks;
 import ohtu.commands.Search;
+import ohtu.commands.Update;
 
 public class App {
 
@@ -24,6 +25,7 @@ public class App {
         commands.put("A", new Add(io, dao));
         commands.put("L", new ListWorks(io, dao));
         commands.put("S", new Search(io, dao));
+        commands.put("U", new Update(io, dao));
         commands.put("E", new Edit(io, dao));
         commands.put("D", new Delete(io, dao));
     }
@@ -33,7 +35,7 @@ public class App {
         io.println("Hello!");
 
         while (true) {
-            io.print("Add/List/Search/Edit/Delete/Quit (A/L/S/E/D/Q): ");
+            io.print("Add / List / Search / Update current page / Edit / Delete / Quit (A/L/S/U/E/D/Q): ");
             String input = io.nextLine();
             if (input.equalsIgnoreCase("Q")) {
                 break;
@@ -43,8 +45,8 @@ public class App {
                     command.run();
                 }
             }
+
         }
         io.println("\nGoodbye!");
     }
-
 }

@@ -1,6 +1,3 @@
-/*
- * @author londes
- */
 package ohtu.commands;
 
 import java.util.List;

@@ -28,6 +28,15 @@ public class AppTest {
     }
 
     @Test
+    public void appDoesNotRunInvalidCommands() {
+        io = new StubIO("abc", "q");
+        new App(io, dao).run();
+        assertEquals("Hello!", io.outputs.get(0));
+        assertTrue(containsIgnoreCase(new String[]{"Add", "List", "Search", "Update current page", "Edit", "Delete", "Quit"}, io.outputs.get(1)));
+        assertTrue(containsIgnoreCase(new String[]{"Add", "List", "Search", "Update current page", "Edit", "Delete", "Quit"}, io.outputs.get(2)));
+    }
+
+    @Test
     public void noWorksStored() {
         io = new StubIO("l", "e", "d", "q");
         new App(io, dao).run();
@@ -104,7 +113,7 @@ public class AppTest {
         new App(io, dao).run();
         assertEquals("Enter your search terms (empty string returns):\n", io.outputs.get(10));
     }
-    
+
     @Test
     public void updatingCurrentPageWorks() {
         io = new StubIO("a", "b", "testAuthor", "testTitle", "200", "testTag", "u", "0", "90", "q");

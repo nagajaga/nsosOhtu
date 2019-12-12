@@ -6,15 +6,20 @@
 
 # How to create a new bookmark
 * Type `A`and press Enter to begin adding a new bookmark.
-* Type the name of the Author and press Enter.
-* Type the Title of the work and press Enter.
+* Fill in the required fields.
 
-# How to list all bookmarks
-* Type `L` and press Enter to list all existing bookmarks.
+# How to list bookmarks
+* Type `L` and press Enter to list bookmarks.
+* Use the given commands to filter by type and read status.
 
 # How to search for bookmarks
+* Type `L` and press Enter to search for bookmarks.
+* Use the given commands to filter your search.
 
 # How to edit bookmarks
+* Type `E` and press Enter to edit bookmarks.
+* Enter the ID of the bookmark you wish to edit.
+* Type new values for the fields you wish to edit, or press Enter to keep the previous values.
 
 # How to exit the program
 * Type `E` and press Enter to exit the program.

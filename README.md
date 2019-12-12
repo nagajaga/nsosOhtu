@@ -1,5 +1,7 @@
 # nsosOhtu
 
+[Final release](https://github.com/nagajaga/nsosOhtu/releases/tag/final) 
+
 User Guide: https://github.com/nagajaga/nsosOhtu/blob/master/Documentation/UserGuide.md
 
 Installation Guide: https://github.com/nagajaga/nsosOhtu/blob/master/Documentation/InstallationGuide.md

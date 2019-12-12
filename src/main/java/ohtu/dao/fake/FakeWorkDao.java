@@ -51,6 +51,7 @@ public class FakeWorkDao implements WorkDao {
 
     /**
      * Updates the copy stored by the dao to match the new object
+     *
      * @param work the work, identified by the id attribute
      * @return a copy of the work object in the database
      */
@@ -102,7 +103,6 @@ public class FakeWorkDao implements WorkDao {
         return results;
     }
 
-    @Override
     public List<Work> searchByTag(List<String> tags) {
         List<Work> results = new ArrayList<>();
         for (Work stored : works) {
@@ -118,9 +118,9 @@ public class FakeWorkDao implements WorkDao {
     /*
      * helper methods
      */
-
     /**
      * A logical AND substring search
+     *
      * @param needles the list of substrings to look for
      * @param haystack the string to search
      */
@@ -135,6 +135,7 @@ public class FakeWorkDao implements WorkDao {
 
     /**
      * for internal use; gets the work in the database
+     *
      * @param id the id of the work to look for
      * @return the internal representation of the work
      */
@@ -148,5 +149,20 @@ public class FakeWorkDao implements WorkDao {
             }
         }
         return null;
+    }
+
+    @Override
+    public List<Work> searchByAuthor(String author) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List<Work> searchByTitle(String title) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List<Work> searchByUrl(String url) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -169,13 +170,18 @@ public class WorkDaoImpl implements WorkDao {
 
     @Override
     public List<Work> searchByTag(String tag) {
-        List<String> list = new ArrayList<String>();
-        list.add(tag);
+        List<String> list = splitKeywords(tag);
         List<Work> results = searchByTag(list);
         return results;
     }
 
-    @Override
+    private List<String> splitKeywords(String str) {
+        if (str == null) {
+            return new ArrayList();
+        }
+        return Arrays.asList(str.split(" "));
+    }
+
     public List<Work> searchByTag(List<String> tags) {
         List<Work> results = new ArrayList<>();
         for (Work stored : works.values()) {
@@ -188,18 +194,68 @@ public class WorkDaoImpl implements WorkDao {
         return results;
     }
 
+    @Override
+    public List<Work> searchByAuthor(String author) {
+        List<Work> results = new ArrayList<>();
+        List<String> keywords = splitKeywords(author);
+        for (Work stored : works.values()) {
+            if (containsSubstrings(keywords, stored.getAuthor())) {
+                Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getCode(), stored.getPages(), stored.getTags(), stored.getType());
+                copy.setId(stored.getId());
+                results.add(copy);
+            }
+        }
+        return results;
+    }
+
+    @Override
+    public List<Work> searchByTitle(String title) {
+        List<Work> results = new ArrayList<>();
+        List<String> keywords = splitKeywords(title);
+        for (Work stored : works.values()) {
+            if (containsSubstrings(keywords, stored.getTitle())) {
+                Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getCode(), stored.getPages(), stored.getTags(), stored.getType());
+                copy.setId(stored.getId());
+                results.add(copy);
+            }
+        }
+        return results;
+    }
+
+    @Override
+    public List<Work> searchByUrl(String url) {
+        List<Work> results = new ArrayList<>();
+        List<String> keywords = splitKeywords(url);
+        for (Work stored : works.values()) {
+            if (containsSubstrings(keywords, stored.getCode())) {
+                Work copy = new Work(stored.getAuthor(), stored.getTitle(), stored.getCode(), stored.getPages(), stored.getTags(), stored.getType());
+                copy.setId(stored.getId());
+                results.add(copy);
+            }
+        }
+        return results;
+    }
+
     /**
      * A logical AND substring search
+     *
      * @param needles the list of substrings to look for
      * @param haystack the string to search
      */
     private boolean containsSubstrings(List<String> needles, String haystack) {
+        if (haystack == null || needles == null) {
+            return false;
+        }
         for (String needle : needles) {
-            if (!haystack.contains(needle)) {
+            if (!containsIgnoreCase(needle, haystack)) {
                 return false;
             }
         }
         return true;
+    }
+
+    private boolean containsIgnoreCase(String needle, String haystack) {
+        return haystack.toLowerCase().contains(needle.toLowerCase());
     }
 
     @Override

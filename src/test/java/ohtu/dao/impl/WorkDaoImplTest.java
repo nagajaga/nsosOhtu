@@ -108,9 +108,93 @@ public class WorkDaoImplTest {
         }
     }
 
+    @Test
+    public void searchBySingleUrlReturnsEmptyWhenNoResults() {
+        create();
+        WorkDaoImpl testDao = (WorkDaoImpl) dao;
+        List<Work> results = testDao.searchByUrl("fnord");
+        assertTrue(results.isEmpty());
+    }
+
+    @Test
+    public void searchBySingleUrlReturnsCorrectResults() {
+        create2();
+        WorkDaoImpl testDao = (WorkDaoImpl) dao;
+        for (String url : new String[]{"c1", "c3"}) {
+            List<Work> results = testDao.searchByUrl(url);
+            if (results.isEmpty()) {
+                fail("search \"" + url + "\" returned an empty list");
+            } else {
+                for (Work work : results) {
+                    if (!work.getCode().contains(url)) {
+                        fail("search results contained a false positive");
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    public void searchBySingleAuthorReturnsEmptyWhenNoResults() {
+        create();
+        WorkDaoImpl testDao = (WorkDaoImpl) dao;
+        List<Work> results = testDao.searchByAuthor("fnord");
+        assertTrue(results.isEmpty());
+    }
+
+    @Test
+    public void searchBySingleAuthorReturnsCorrectResults() {
+        create2();
+        WorkDaoImpl testDao = (WorkDaoImpl) dao;
+        for (String author : new String[]{"a1", "a2", "a3"}) {
+            List<Work> results = testDao.searchByAuthor(author);
+            if (results.isEmpty()) {
+                fail("search \"" + author + "\" returned an empty list");
+            } else {
+                for (Work work : results) {
+                    if (!work.getAuthor().contains(author)) {
+                        fail("search results contained a false positive");
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    public void searchBySingleTitleReturnsEmptyWhenNoResults() {
+        create();
+        WorkDaoImpl testDao = (WorkDaoImpl) dao;
+        List<Work> results = testDao.searchByTitle("fnord");
+        assertTrue(results.isEmpty());
+    }
+
+    @Test
+    public void searchBySingleTitleReturnsCorrectResults() {
+        create2();
+        WorkDaoImpl testDao = (WorkDaoImpl) dao;
+        for (String title : new String[]{"b1", "b2", "b3"}) {
+            List<Work> results = testDao.searchByTitle(title);
+            if (results.isEmpty()) {
+                fail("search \"" + title + "\" returned an empty list");
+            } else {
+                for (Work work : results) {
+                    if (!work.getTitle().contains(title)) {
+                        fail("search results contained a false positive");
+                    }
+                }
+            }
+        }
+    }
+
     private void create() {
         dao.create(new Work("a1", "b1", "c1", 1, "d1", WorkType.WEBSITE));
         dao.create(new Work("a2", "b2", "c2", 1, "d2", WorkType.WEBSITE));
+        dao.create(new Work("a3", "b3", "c3", 1, "d3", WorkType.WEBSITE));
+    }
+
+    private void create2() {
+        dao.create(new Work("a1", "b1", "c1", 1, "d1", WorkType.WEBSITE));
+        dao.create(new Work("a2", "b2", "d2", 1, WorkType.BOOK));
         dao.create(new Work("a3", "b3", "c3", 1, "d3", WorkType.WEBSITE));
     }
 }

@@ -3,11 +3,9 @@
  */
 package ohtu.commands;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import ohtu.dao.Dao;
-import ohtu.dao.WorkDao;
 import ohtu.domain.Work;
 import ohtu.domain.WorkType;
 import ohtu.io.IO;
@@ -43,21 +41,6 @@ public abstract class Command {
             return id;
         }
         return -1;
-    }
-
-    protected List<Work> findWorks(String type) {
-        io.println("Enter the " + type + " you want to look for (empty string returns):\n");
-        List<Work> results = null;
-        String query = io.nextLine();
-        if (query.isEmpty()) {
-            return null;
-        }
-        if (type.equals("tag")) {
-            results = ((WorkDao) dao).searchByTag(query);
-        } else {
-            results = new ArrayList<>();
-        }
-        return results;
     }
 
     protected WorkType askType(boolean editing, Work copy) {
